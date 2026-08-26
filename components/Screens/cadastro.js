@@ -52,7 +52,7 @@ export default function Cadastro({navigation}) {
       </View>
 
       <View style={styles.box}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.button}>
+        <TouchableOpacity onPress={() => navigation.navigate('HomeTabs')} style={styles.button}>
                   <Text style={styles.textButton}>Cadastro</Text>
                 </TouchableOpacity>
                 <Text style={styles.link1}>Já tem uma conta?</Text>

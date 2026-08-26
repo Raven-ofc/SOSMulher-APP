@@ -43,7 +43,7 @@ export default function Login({navigation}) {
       </View>
 
       <View style={styles.links}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.button}>
+        <TouchableOpacity onPress={() => navigation.navigate('HomeTabs')} style={styles.button}>
           <Text style={styles.textButton}>Entrar</Text>
         </TouchableOpacity>
         <Text style={styles.link1}>Ainda não tem uma conta?</Text>

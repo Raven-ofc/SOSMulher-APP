@@ -32,7 +32,7 @@ export default function EsqueciMinhaSenha({navigation}) {
       </View>
 
       <View style={styles.box}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.button}>
+        <TouchableOpacity onPress={() => navigation.navigate('HomeTabs')} style={styles.button}>
                   <Text style={styles.textButton}>Enviar</Text>
                 </TouchableOpacity>
       </View>

@@ -34,7 +34,7 @@ export default function EsqueciMinhaSenha({navigation}) {
       <View style={styles.box}>
         <TouchableOpacity onPress={() => navigation.navigate('HomeTabs')} style={styles.button}>
                   <Text style={styles.textButton}>Enviar</Text>
-                </TouchableOpacity>
+        </TouchableOpacity>
       </View>
     </View>
   );

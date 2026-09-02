@@ -173,14 +173,14 @@ export const styles = StyleSheet.create({
     right: 0,
     backgroundColor: "#FEF9FB",
     padding: 3,
-    borderRadius: "50%",
+    borderRadius: 50,
     borderColor: "#EC6E99",
     borderWidth: 1
   },
   containerButtons: {
     backgroundColor: "#fff",
     margin: 20,
-    flexDirection: "collumn",
+    flexDirection: "column",
     borderRadius: 20,
     elevation: 3
   },
@@ -219,7 +219,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#EC6E99",
     borderRadius: 12,
-    marginVertical:10,
+    marginVertical: 10,
     paddingHorizontal: 14,
     paddingVertical: 12,
     fontSize: 15,
@@ -229,9 +229,13 @@ export const styles = StyleSheet.create({
     width: '100%',
     marginTop: 10,
   },
-  cardTitulo:{
-    color:"#50333D",
+  cardTitulo: {
+    color: "#50333D",
     fontWeight: 'bold',
-    fontSize:16
+    fontSize: 16
+  },
+  scrollContent: {
+    width: '100%',
+    justifyContent: 'center',
   }
 });

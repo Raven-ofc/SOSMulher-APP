@@ -98,7 +98,7 @@ export default function Home() {
 
     <View style={styles.container}>
 
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
 
         <View style={styles.alertaVerde}>
           <Feather name="shield" size={34} color="#53997B" />
@@ -156,35 +156,35 @@ export default function Home() {
 
         </View>
 
+        <View style={styles.centerAcesso}>
+          <View style={styles.acesso}>
+            <Text style={styles.textAcesso}>Acesso Rápido</Text>
+            <View style={styles.viewAcesso}>
 
-        <View style={styles.acesso}>
-          <Text style={styles.textAcesso}>Acesso Rápido</Text>
-          <View style={styles.viewAcesso}>
+              <View style={styles.buttonSection}>
+                <TouchableOpacity style={styles.chamar}>
+                  <MaterialIcons name="local-police" size={32} color="#FEF9FB" />
+                </TouchableOpacity>
+                <Text style={styles.textBotao}>Polícia</Text>
+              </View>
 
-            <View style={styles.buttonSection}>
-              <TouchableOpacity style={styles.chamar}>
-                <MaterialIcons name="local-police" size={32} color="#FEF9FB" />
-              </TouchableOpacity>
-              <Text style={styles.textBotao}>Polícia</Text>
+              <View style={styles.buttonSection}>
+                <TouchableOpacity style={styles.chamar}>
+                  <MaterialIcons name="phone" size={32} color="#FEF9FB" />
+                </TouchableOpacity>
+                <Text style={styles.textBotao}>Contato de Emergência</Text>
+              </View>
+
+              <View style={styles.buttonSection}>
+                <TouchableOpacity style={styles.chamar}>
+                  <Ionicons name="shield-checkmark" size={32} color={"#FEF9FB"}></Ionicons>
+                </TouchableOpacity>
+                <Text style={styles.textBotao}>Dicas de Segurança</Text>
+              </View>
+
             </View>
-
-            <View style={styles.buttonSection}>
-              <TouchableOpacity style={styles.chamar}>
-                <MaterialIcons name="phone" size={32} color="#FEF9FB" />
-              </TouchableOpacity>
-              <Text style={styles.textBotao}>Contato de Emergência</Text>
-            </View>
-
-            <View style={styles.buttonSection}>
-              <TouchableOpacity style={styles.chamar}>
-                <Ionicons name="shield-checkmark" size={32} color={"#FEF9FB"}></Ionicons>
-              </TouchableOpacity>
-              <Text style={styles.textBotao}>Dicas de Segurança</Text>
-            </View>
-
           </View>
         </View>
-
       </ScrollView>
 
     </View>

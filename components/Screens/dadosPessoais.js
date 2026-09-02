@@ -19,7 +19,7 @@ export default function DadosPessoais({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Header */}
         <View style={styles.voltar}>
           <TouchableOpacity onPress={() => navigation.goBack()} >
@@ -39,12 +39,14 @@ export default function DadosPessoais({ navigation }) {
             <TextInput
               style={styles.input}
               placeholder="Nome completo..."
+              placeholderTextColor={"#915e70"}
               value={nome}
               onChangeText={setNome}
             />
 
             <TextInput
               style={styles.input}
+              placeholderTextColor={"#915e70"}
               placeholder="Telefone..."
               value={fone}
               onChangeText={setFone}
@@ -53,6 +55,7 @@ export default function DadosPessoais({ navigation }) {
             <TextInput
               style={styles.input}
               placeholder="Email..."
+              placeholderTextColor={"#915e70"}
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
@@ -83,6 +86,7 @@ export default function DadosPessoais({ navigation }) {
             <TextInput
               style={styles.input}
               placeholder="Cidade"
+              placeholderTextColor={"#915e70"}
               value={cidade}
               onChangeText={setCidade}
             />
@@ -90,12 +94,14 @@ export default function DadosPessoais({ navigation }) {
             <TextInput
               style={styles.input}
               placeholder="Bairro..."
+              placeholderTextColor={"#915e70"}
               value={bairro}
               onChangeText={setBairro}
             />
 
             <TextInput
               style={styles.input}
+              placeholderTextColor={"#915e70"}
               placeholder="Rua..."
               value={rua}
               onChangeText={setRua}
@@ -104,11 +110,13 @@ export default function DadosPessoais({ navigation }) {
             <TextInput
               style={styles.input}
               placeholder="num..."
+              placeholderTextColor={"#915e70"}
               value={num}
               onChangeText={setNum}
             />
             <TextInput
               style={styles.input}
+              placeholderTextColor={"#915e70"}
               placeholder="complemento..."
               value={complemento}
               onChangeText={setComplemento}
@@ -134,32 +142,6 @@ export default function DadosPessoais({ navigation }) {
             </TouchableOpacity>
           </View>
 
-          <Modal
-            visible={ModalPedidoVisible} transparent animationType="fade">
-            <View style={styles.modalOverlay}>
-              <View style={styles.deleteModal}>
-
-                <Text style={styles.modalTitle}>
-                  Pedido de adição enviado!
-                </Text>
-
-                <Text style={styles.modalText}>
-                  Enviamos seu pedido de adição de local seguro para as autoridades!, aguarde a confirmação
-                </Text>
-
-                <View style={styles.buttonSectionFechar}>
-
-                  <TouchableOpacity
-                    style={styles.buttonExcluir}
-                    onPress={() => setModalPedidoVisible(false)}
-                  >
-                    <Text style={styles.textButtonExcluir}>Fechar</Text>
-                  </TouchableOpacity>
-                </View>
-
-              </View>
-            </View>
-          </Modal>
         </View>
       </ScrollView>
     </View >

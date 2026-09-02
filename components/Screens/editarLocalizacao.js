@@ -19,7 +19,7 @@ export default function EditarAnjo({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <ScrollView>
+            <ScrollView contentContainerStyle={styles.scrollContent}>
                 {/* Header */}
                 <View style={styles.voltar}>
                     <TouchableOpacity onPress={() => navigation.goBack()} >
@@ -37,6 +37,7 @@ export default function EditarAnjo({ navigation }) {
                         <TextInput
                             style={styles.input}
                             placeholder="Nome do local..."
+                            placeholderTextColor={"#915e70"}
                             value={nome}
                             onChangeText={setNome}
                         />
@@ -44,6 +45,7 @@ export default function EditarAnjo({ navigation }) {
                         <TextInput
                             style={styles.input}
                             placeholder="Bairro..."
+                            placeholderTextColor={"#915e70"}
                             value={bairro}
                             onChangeText={setBairro}
                         />
@@ -51,6 +53,7 @@ export default function EditarAnjo({ navigation }) {
                         <TextInput
                             style={styles.input}
                             placeholder="Rua..."
+                            placeholderTextColor={"#915e70"}
                             value={rua}
                             onChangeText={setRua}
                         />
@@ -58,12 +61,14 @@ export default function EditarAnjo({ navigation }) {
                         <TextInput
                             style={styles.input}
                             placeholder="num..."
+                            placeholderTextColor={"#915e70"}
                             value={num}
                             onChangeText={setNum}
                         />
                         <TextInput
                             style={styles.input}
                             placeholder="complemento..."
+                            placeholderTextColor={"#915e70"}
                             value={complemento}
                             onChangeText={setComplemento}
                         />

@@ -3,7 +3,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Inicio from './components/Screens/inicio';
 import Login from './components/Screens/login';
-import Cadastro from './components/Screens/cadastro';
 import EsqueciMinhaSenha from './components/Screens/EsqueciMinhaSenha';
 
 import HomeTabs from './components/Screens/HomeTabs';
@@ -32,11 +31,6 @@ export default function App() {
           <Stack.Screen
             name="Login"
             component={Login}
-          />
-
-          <Stack.Screen
-            name="Cadastro"
-            component={Cadastro}
           />
 
           <Stack.Screen

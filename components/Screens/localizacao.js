@@ -1,8 +1,11 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, Image, TouchableOpacity, Modal, ImageBackground, Animated, PanResponder, Dimensions, FlatList, ScrollView } from 'react-native';
-import { useRoute } from '@react-navigation/native';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import React, { useState, useRef, useEffect } from 'react'
+import { View, Text, Image, TouchableOpacity, Modal, ImageBackground, Animated, PanResponder, Dimensions, FlatList, ScrollView } from 'react-native'
+import { useRoute } from '@react-navigation/native'
+import Ionicons from '@expo/vector-icons/Ionicons'
+import MapView, { Marker } from 'react-native-maps'
 import { styles } from '../Styles/StyleLocal'
+import Feather from '@expo/vector-icons/Feather';
+import * as Location from 'expo-location'
 
 const { height } = Dimensions.get('window');
 
@@ -13,48 +16,83 @@ const endereco = [
     bairro: 'Guaianazes',
     rua: 'Inácio Moreira',
     num: '444',
-    complemento: ''
-  },
-  {
-    id: '2',
-    nome: 'Escola',
-    bairro: 'Guaianazes',
-    rua: 'Feliciano Fonseca',
-    num: '235',
-    complemento: ''
+    complemento: '',
+    latitude: -23.550093,
+    longitude: -46.400124,
   },
   {
     id: '3',
-    nome: 'Escola',
+    nome: '44º Distrito Policial',
     bairro: 'Guaianazes',
-    rua: 'Feliciano Fonseca',
-    num: '235',
-    complemento: ''
+    rua: 'Salvador Gianetti',
+    num: '386',
+    complemento: '',
+    latitude: -23.542582,
+    longitude: -46.418777,
   },
   {
     id: '4',
-    nome: 'Escola',
-    bairro: 'Guaianazes',
-    rua: 'Feliciano Fonseca',
-    num: '235',
-    complemento: ''
+    nome: '7ª DDM',
+    bairro: 'Itaquera',
+    rua: "Sabbado D'Ângelo",
+    num: '',
+    complemento: '',
+    latitude: -23.534242,
+    longitude: -46.451615,
   },
 
 ];
 
 export default function Localizacao({ navigation }) {
-  const remoteImage = { uri: 'https://previews.123rf.com/images/ket4up/ket4up1707/ket4up170700042/81563570-gps-navigation-background-road-map-vector-illustration.jpg' };
+
+  const [localizacaoAtual, setLocalizacaoAtual] = useState(null)
+  const [erroLocalizacao, setErroLocalizacao] = useState(null)
+
+  useEffect(() => {
+    let subscription = null
+
+    const startLocationTracking = async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync()
+
+      if (status !== 'granted') {
+        setErroLocalizacao('A permissão para acessar a localização foi negada.');
+        return
+      }
+
+      subscription = await Location.watchPositionAsync(
+        {
+          accuracy: Location.Accuracy.High,
+          timeInterval: 3000,
+          distanceInterval: 5,
+        },
+        (newLocation) => {
+          setLocalizacaoAtual(newLocation)
+        }
+      )
+    }
+
+    startLocationTracking()
+
+    return () => {
+      if (subscription) {
+        subscription.remove()
+      }
+    }
+  }
+
+    , [])
 
   const [ModalVisible, setModalVisible] = useState(false);
 
   const renderEndereco = ({ item }) => (
     <TouchableOpacity
-      onPress={() =>{
+      onPress={() => {
         fecharModal()
         navigation.navigate('EditarLocalizacao', {
           endereco: item
         }
-        )}}
+        )
+      }}
       style={styles.buttonEndereco}>
       <View style={styles.textos}>
         <Text style={styles.nome}>{item.nome}</Text>
@@ -128,22 +166,52 @@ export default function Localizacao({ navigation }) {
   return (
     <View style={styles.container}>
 
-      {/* Header */}
-
-      <ImageBackground
-        source={remoteImage}
-        resizeMode="cover"
-        style={styles.imageFundo}
+      {localizacaoAtual ? (<MapView
+        style={styles.mapaLocal}
+        mapType='terrain'
+        initialRegion={{
+          latitude: localizacaoAtual.coords.latitude,
+          longitude: localizacaoAtual.coords.longitude,
+          latitudeDelta: 0.0092,
+          longitudeDelta: 0.0041,
+        }}
       >
-        <View style={styles.buttonSection}>
-          <TouchableOpacity
-            onPress={abrirModal}
-            style={styles.buttonMapa}>
-            <Ionicons name='map' size={30} color={'#D7A6BF'}></Ionicons>
-          </TouchableOpacity>
-
+        <Marker
+          coordinate={{
+            latitude: localizacaoAtual.coords.latitude,
+            longitude: localizacaoAtual.coords.longitude
+          }}
+          title="Sua Localização atual"  
+        />
+        {endereco.map((item) => (
+          <Marker
+            key={item.id}
+            coordinate={{ latitude: item.latitude, longitude: item.longitude }}
+            title={item.nome}
+          />
+        ))}
+      </MapView>) : (
+        <View style={styles.erroLoc}>
+          <Text style={styles.textErro}>
+            {erroLocalizacao || 'Obtendo sua localização...'}
+          </Text>
         </View>
-      </ImageBackground>
+      )}
+      <View style={styles.buttonSectionMapa}>
+        <TouchableOpacity
+          onPress={abrirModal}
+          style={styles.buttonMapa}>
+          <Ionicons name='map' size={30} color={'#D7A6BF'}></Ionicons>
+        </TouchableOpacity>
+
+      </View>
+
+      <View style={styles.containerAlerta}>
+          <View style={styles.alertaVerde}>
+            <Feather name="shield" size={34} color="#53997B" />
+            <Text style={styles.tituloAviso}>Você está em segurança!</Text>
+          </View>
+      </View>
 
       <Modal
         visible={ModalVisible}
@@ -166,7 +234,7 @@ export default function Localizacao({ navigation }) {
             }
           >
 
-            <View style = {styles.areaArrastar}{...panResponder.panHandlers}>
+            <View style={styles.areaArrastar}{...panResponder.panHandlers}>
               <Text style={styles.modalTitle}>
                 Seus Locais Seguros
               </Text>
@@ -177,16 +245,6 @@ export default function Localizacao({ navigation }) {
               keyExtractor={(item) => item.id}
               renderItem={renderEndereco}
             />
-
-            <TouchableOpacity 
-              onPress={()=>{
-                fecharModal()
-                navigation.navigate('AdicionarLocal')
-              }}
-              style={styles.button}
-            >
-              <Text style={styles.textButton}>+ Adicionar Local</Text>
-            </TouchableOpacity>
 
           </Animated.View>
         </View>

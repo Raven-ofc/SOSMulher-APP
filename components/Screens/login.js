@@ -17,8 +17,8 @@ export default function Login({navigation}) {
 
       <View style={styles.inicio}>
         <StatusBar style="auto" />
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="chevron-back-circle-sharp" size={30} color="#EC6E99" />
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.voltar}>
+          <Ionicons name="arrow-back" size={40} color="#50333D" />
         </TouchableOpacity>
         <Image source={require('../../assets/logoSosMulher.png')} style={styles.logo} />
         <Text style={styles.title}>Bem-vinda!</Text>
@@ -28,13 +28,13 @@ export default function Login({navigation}) {
       <View style={styles.form}>
         <View style={styles.inputContainer}>
           <Feather name="mail" size={24} color="black" />
-          <TextInput style={styles.input} placeholder="Email"></TextInput>
+          <TextInput style={styles.input} placeholder="Email" placeholderTextColor={"#915e70"}></TextInput>
         </View>
         <View style={styles.inputContainer}>
           <TouchableOpacity>
             <Feather name="eye" size={24} color="black" style={styles.icon}/>
           </TouchableOpacity>
-          <TextInput style={styles.input} placeholder="Senha" secureTextEntry={true}></TextInput>
+          <TextInput style={styles.input} placeholder="Senha" placeholderTextColor={"#915e70"} secureTextEntry={true}></TextInput>
         </View>
 
         <TouchableOpacity onPress={() => navigation.navigate('EsqueciMinhaSenha')}>
@@ -45,10 +45,6 @@ export default function Login({navigation}) {
       <View style={styles.links}>
         <TouchableOpacity onPress={() => navigation.navigate('HomeTabs')} style={styles.button}>
           <Text style={styles.textButton}>Entrar</Text>
-        </TouchableOpacity>
-        <Text style={styles.link1}>Ainda não tem uma conta?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
-          <Text style={styles.link2}>Cadastrar</Text>
         </TouchableOpacity>
       </View>
     </View>

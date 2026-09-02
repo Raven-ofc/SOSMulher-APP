@@ -1,9 +1,8 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     backgroundColor: '#FEF9FB',
     padding: 8,
   },
@@ -23,84 +22,95 @@ export const styles = StyleSheet.create({
     backgroundColor: '#E91E63',
   },
 
-  button:{
+  button: {
     backgroundColor: '#EC6E99',
-    height:200,
+    height: 200,
     width: 200,
-    borderRadius: "50%",
+    borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  titulo:{
+  titulo: {
     fontSize: 24,
     fontWeight: 'bold',
     marginTop: 10,
     color: '#53997B',
     textAlign: 'center',
   },
-  subTitulo:{
+  subTitulo: {
     fontSize: 18,
     marginTop: 5,
     color: '#5BB18C',
     textAlign: 'center',
   },
-  alertaVerde:{
+  alertaVerde: {
     backgroundColor: '#E8F7F0',
     padding: 10,
     borderRadius: 10,
     height: 150,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 20
+    marginHorizontal: 20,
+    marginVertical: 40,
   },
-
-  acesso:{
-    justifyContent: 'space-between',
+  centerAcesso: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  acesso: {
+    position: 'relative',
+    bottom: 2,
     backgroundColor: '#fff',
     borderRadius: 10,
-    padding: 30,
-    height: 170,
+    padding: 20,
+    minHeight: 170,
     elevation: 2,
-    marginVertical:20,
-    marginHorizontal: 10
+    marginVertical: 20,
+    width: '90%',
+    maxWidth: 700
   },
-  textAcesso:{
+  textAcesso: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#50333D'
   },
-  viewAcesso:{
+  viewAcesso: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
+    alignItems: 'flex-start',
+    marginTop: 15,
   },
-  chamar:{
+
+  chamar: {
     backgroundColor: '#EC6E99',
-    margin: 2,
-    elevation:2,
+    elevation: 2,
     padding: 10,
+    width: 60,
+    height: 60,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  text:{
+  text: {
     fontSize: 24,
     fontWeight: 'bold',
     color: "black",
   },
-  buttonSection:{
-    flexDirection:'column',
-    width: 75,
-    height:75,
+  buttonSection: {
+    width: 90,
+    alignItems: 'center',
   },
-  textBotao:{
+  textBotao: {
     textAlign: 'center',
-    color: "#EC6E99"
+    color: "#EC6E99",
+    marginTop:5,
+    width:90
   },
-  textMainHome:{
+  textMainHome: {
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    width: 250,
+    width: '90%',
     color: '#C8AEBB'
-  }
+  },
 });

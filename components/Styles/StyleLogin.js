@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
@@ -7,38 +7,38 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FEF9FB',
     padding: 10,
   },
-  logo:{
+  logo: {
     width: 200,
     height: 200,
     alignSelf: 'center',
   },
-  button:{
+  button: {
     backgroundColor: '#EC6E99',
     borderRadius: 50,
     padding: 15,
   },
-  textButton:{
+  textButton: {
     fontSize: 20,
     textAlign: 'center',
     color: '#ffffff',
   },
-  title:{
+  title: {
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#50333D',
   },
-  subtitle:{
+  subtitle: {
     fontSize: 20,
     textAlign: 'center',
     color: '#D7A6BF',
   },
-  link1:{
+  link1: {
     fontSize: 20,
     textAlign: 'center',
     color: '#50333D',
   },
-  link2:{
+  link2: {
     fontSize: 20,
     textAlign: 'center',
     color: '#EC6E99',
@@ -60,14 +60,19 @@ export const styles = StyleSheet.create({
     height: 50,
     fontSize: 20,
   },
-  links:{
+  links: {
     height: "25%",
     flexDirection: 'column',
     justifyContent: 'space-evenly',
   },
-  form:{
+  form: {
     height: "25%",
     flexDirection: 'column',
     justifyContent: 'space-evenly',
+  },
+  voltar: {
+    paddingTop: 40,
+    paddingBottom: 20,
+    paddingHorizontal: 15,
   },
 });

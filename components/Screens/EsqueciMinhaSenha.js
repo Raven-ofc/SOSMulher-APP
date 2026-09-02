@@ -27,7 +27,7 @@ export default function EsqueciMinhaSenha({navigation}) {
         <Text style={styles.subtitle}>Email ou telefone cadastrado</Text>
         <View style={styles.inputContainer}>
           <Feather name="mail" size={24} color="black" />
-          <TextInput style={styles.input} placeholder="Email"></TextInput>
+          <TextInput style={styles.input} placeholder="Email" placeholderTextColor={"#915e70"}></TextInput>
         </View>
       </View>
 

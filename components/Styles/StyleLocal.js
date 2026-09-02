@@ -106,9 +106,6 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         margin: 20,
         padding: 15,
-        position: 'absolute',
-        right: 0,
-        top: 10,
         elevation: 2,
         width: 60,
         height: 60,
@@ -196,6 +193,11 @@ export const styles = StyleSheet.create({
         marginVertical: 10,
         gap: 10,
     },
+    buttonSectionMapa: {
+        position: 'absolute',
+        top: 20,
+        right: 10,
+    },
     modalOverlay: {
         flex: 1,
         backgroundColor: "rgba(0,0,0,0.5)",
@@ -209,17 +211,52 @@ export const styles = StyleSheet.create({
         marginVertical: 10,
         gap: 10,
     },
-    button:{
-      backgroundColor: '#FEF9FB',
-      borderRadius: 50,
-      borderColor: '#EC6E99',
-      borderWidth: 2,
-      margin: 20,
-      padding: 15,
-      elevation: 2,
+    button: {
+        backgroundColor: '#FEF9FB',
+        borderRadius: 50,
+        borderColor: '#EC6E99',
+        borderWidth: 2,
+        margin: 20,
+        padding: 15,
+        elevation: 2,
     },
     areaArrastar: {
         height: 80,
     },
-
+    mapaLocal: {
+        flex: 1,
+        width: "100%"
+    },
+    erroLoc: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    textErro: {
+        fontSize: 20,
+        color: '#EC6E99',
+        fontWeight: 'bold'
+    },
+    alertaVerde: {
+        backgroundColor: '#E8F7F0',
+        padding: 10,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 2
+    },
+    tituloAviso: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginTop: 10,
+        color: '#53997B',
+        textAlign: 'center',
+    },
+    containerAlerta:{
+        position: 'absolute',
+        bottom: 30,
+        right:0,
+        left: 0,
+        alignItems: 'center'
+    }
 });

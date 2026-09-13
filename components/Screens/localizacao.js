@@ -168,7 +168,6 @@ export default function Localizacao({ navigation }) {
 
       {localizacaoAtual ? (<MapView
         style={styles.mapaLocal}
-        mapType='terrain'
         initialRegion={{
           latitude: localizacaoAtual.coords.latitude,
           longitude: localizacaoAtual.coords.longitude,

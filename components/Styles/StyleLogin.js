@@ -46,11 +46,13 @@ export const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: '#EC6E99',
     borderRadius: 8,
     paddingHorizontal: 15,
     marginVertical: 8,
+    elevation: 3,
+    backgroundColor: '#fff',  
   },
   icon: {
     marginRight: 8,

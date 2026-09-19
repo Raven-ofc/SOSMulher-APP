@@ -15,8 +15,8 @@ export default function EsqueciMinhaSenha({navigation}) {
     <View style={styles.container}>
       <View style={styles.box}>
         <StatusBar style="auto" />
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="chevron-back-circle-sharp" size={30} color="#EC6E99" />
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.voltar}>
+          <Ionicons name="arrow-back" size={40} color="#50333D" />
         </TouchableOpacity>
         <Image source={require('../../assets/logoSosMulher.png')} style={styles.logo} />
         <Text style={styles.title}>Esqueceu sua senha?</Text>

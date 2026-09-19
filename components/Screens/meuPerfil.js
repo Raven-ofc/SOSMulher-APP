@@ -1,12 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { styles } from '../Styles/StylePerfil.js';
 import { Ionicons } from '@expo/vector-icons';
+import { usarVitima } from '../contextos/vitimaContexto.js';
+
+const ENDERECO_URL = `http://seuip:8000/api/endereco`
 
 export default function MeuPerfil({ navigation }) {
+  const { vitimaLogada, sairDaConta } = usarVitima()
+  const [erroImagem, setErroImagem] = useState(false)
+  const urlImagem = vitimaLogada?.imagemVitima
+    ? `http://seuip:8000/storage/${vitimaLogada.imagemVitima}`
+    : null
+
+  const sair = () => {
+
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Login' }]
+    });
+
+    sairDaConta();
+
+  }
+
   return (
     <View style={styles.container}>
-<ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.headerTitulo}>Meu Perfil</Text>
@@ -15,15 +35,18 @@ export default function MeuPerfil({ navigation }) {
         <View style={styles.cont}>
           <View style={styles.principalCont}>
             <View style={styles.containerFoto}>
-              <Image source={{ uri: 'https://brasil.un.org/sites/default/files/styles/featured_image/public/2021-08/maria-da-penha_foto-jarbas-oliveira.jpeg?itok=oGsF8sGD' }} style={styles.fotoCont} />
-              <TouchableOpacity style={styles.mudarFoto}>
-                <Ionicons name="create-outline" size={25} color={"#EC6E99"}></Ionicons>
-              </TouchableOpacity>
+              <Image
+                source={urlImagem && !erroImagem
+                  ? { uri: urlImagem }
+                  : require('../../assets/img_sem_foto.jpg')
+                }
+                onError={() => setErroImagem(true)}
+                style={styles.fotoCont} />
             </View>
-            <Text style={styles.nomeCont}>Maria da Penha</Text>
+            <Text style={styles.nomeCont}>{vitimaLogada?.nomeVitima}</Text>
           </View>
-          <Text style={styles.foneCont}>Número: (11) 91134-2006</Text>
-          <Text style={styles.foneCont}>Email: MariaPn@gmail.com</Text>
+          <Text style={styles.foneCont}>{vitimaLogada?.telefoneVitima ? vitimaLogada.telefoneVitima : "Nenhum Telefone Registrado."}</Text>
+          <Text style={styles.foneCont}>{vitimaLogada?.emailVitima}</Text>
         </View>
 
         <View style={styles.containerButtons}>
@@ -70,7 +93,9 @@ export default function MeuPerfil({ navigation }) {
 
         </View>
 
-        <TouchableOpacity style={styles.Exitbutton}>
+        <TouchableOpacity
+          onPress={sair}
+          style={styles.Exitbutton}>
           <Text style={styles.textExitButton}>Sair</Text>
         </TouchableOpacity>
       </ScrollView>

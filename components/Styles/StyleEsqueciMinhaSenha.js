@@ -59,4 +59,9 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#ffffff',
   },
+  voltar: {
+    paddingTop: 40,
+    paddingBottom: 20,
+    paddingHorizontal: 15,
+  },
 });

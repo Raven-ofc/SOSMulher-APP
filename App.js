@@ -9,6 +9,7 @@ import HomeTabs from './components/Screens/HomeTabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import DetalheAnjo from './components/Screens/detalheAnjo';
 
+
 const Stack = createStackNavigator();
 
 export default function App() {

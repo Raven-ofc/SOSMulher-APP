@@ -1,19 +1,129 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Modal, TextInput, Alert } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { styles } from '../Styles/StylePerfil'
+import axios from "axios";
 import { ScrollView } from 'react-native-gesture-handler';
+import { usarVitima } from '../contextos/vitimaContexto.js';
+import * as ImagePicker from 'expo-image-picker';
+
+const API_URL = 'http://seuip:8000/api/atualizarVitima'
 
 export default function DadosPessoais({ navigation }) {
-  const [nome, setNome] = useState()
-  const [email, setEmail] = useState()
-  const [fone, setFone] = useState()
+  const { vitimaLogada, atualizarVitima } = usarVitima()
+  const [nome, setNome] = useState(vitimaLogada.nomeVitima)
+  const [email, setEmail] = useState(vitimaLogada.emailVitima)
+  const [fone, setFone] = useState(vitimaLogada.telefoneVitima)
   const [cidade, setCidade] = useState()
   const [bairro, setBairro] = useState()
   const [rua, setRua] = useState()
   const [num, setNum] = useState()
   const [complemento, setComplemento] = useState()
+  const [carregando, setCarregando] = useState(false)
+  const [saveModalVisible, setSaveModalVisible] = useState(false)
+  const [erroImagem, setErroImagem] = useState(false)
+  const [imagem, setImagem] = useState(null);
+
+  const urlImagem = vitimaLogada?.imagemVitima ? `http://seuip:8000/storage/${vitimaLogada.imagemVitima}` : null
+  const AXIOS_IMGURL = 'http://seuip:8000/api/atualizarImagem'
+
+  const atualizarImagem = async (imagemSelecionada) => {
+    try {
+      const formData = new FormData()
+
+      formData.append('imagem', {
+        uri: imagemSelecionada.uri,
+        name: imagemSelecionada.fileName || 'foto-perfil.jpg',
+        type: imagemSelecionada.mimeType || 'image/jpeg',
+      })
+
+      const response = await axios.post(
+        `${AXIOS_IMGURL}/${vitimaLogada.idVitima}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
+      }
+      )
+
+      atualizarVitima({
+        imagemVitima: response.data.imagemVitima
+      })
+
+      setImagem(imagemSelecionada)
+      setErroImagem(false)
+
+      Alert.alert('Sucesso', 'Foto atualizada com sucesso!')
+    } catch (error) {
+      console.error(
+        'Erro ao atualizar imagem:',
+        error.response?.data || error.message
+      );
+
+      Alert.alert('Erro', 'Não foi possível atualizar a foto.');
+    }
+  }
+
+  const escolherImagem = async () => {
+    const permissaoImagem = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (!permissaoImagem.granted) {
+      Alert.alert(
+        'Permissão Necessária!',
+        'Precisamos de acesso à galeria para escolher a foto.'
+      )
+      return
+    }
+
+    const resultadoGaleria = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.8
+    })
+
+    if (!resultadoGaleria.canceled) {
+      const foto = resultadoGaleria.assets[0]
+      setImagem(foto)
+      setErroImagem(false)
+      await atualizarImagem(foto);
+    }
+  }
+
+  const enviarDadosVitima = () => {
+    if (!nome || !email || !fone) {
+      Alert.alert('Preencha todos os dados do formulário')
+      return
+    }
+
+    setCarregando(true)
+
+    const dados = {
+      nome: nome,
+      email: email,
+      numeroTelefone: fone
+    }
+
+    axios.put(`${API_URL}/${vitimaLogada.idVitima}`, dados)
+      .then((response) => {
+        setNome('');
+        setFone('');
+        setEmail('');
+        atualizarVitima({
+          nomeVitima: nome,
+          emailVitima: email,
+          telefoneVitima: fone
+        });
+        navigation.goBack();
+      })
+      .catch((err) => {
+        console.error("Erro na requisição PUT Axios:", err);
+        Alert.alert('Erro', 'Não foi possível atualizar o Usuário. Verifique a conexão.');
+      })
+      .finally(() => {
+        setCarregando(false);
+      });
+  }
 
   const [ModalPedidoVisible, setModalPedidoVisible] = useState(false);
 
@@ -27,9 +137,29 @@ export default function DadosPessoais({ navigation }) {
           </TouchableOpacity>
         </View>
 
-                <View style={styles.header}>
-                    <Text style={styles.headerTitulo}>Seus Dados</Text>
-                </View>
+        <View style={styles.header}>
+          <Text style={styles.headerTitulo}>Seus Dados</Text>
+        </View>
+
+        <View style={styles.principalCont}>
+          <View style={styles.containerFoto}>
+            <TouchableOpacity onPress={escolherImagem}>
+              <Image
+                source={
+                  imagem 
+                    ? { uri: imagem.uri }
+                    :urlImagem && !erroImagem
+                      ?{uri: urlImagem}
+                      : require('../../assets/img_sem_foto.jpg')
+                }
+                onError={() => setErroImagem(true)}
+                style={styles.fotoCont} />
+              <View style={styles.mudarFoto}>
+                <Ionicons name="create-outline" size={25} color={"#EC6E99"}></Ionicons>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
 
         <View style={styles.card}>
 
@@ -72,7 +202,7 @@ export default function DadosPessoais({ navigation }) {
               <Text style={styles.textButtonExcluir}>Cancelar</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.buttonEditar}>
+            <TouchableOpacity onPress={() => setSaveModalVisible(true)} style={styles.buttonEditar}>
               <Text style={styles.textButtonEditar}>Salvar</Text>
             </TouchableOpacity>
           </View>
@@ -144,6 +274,40 @@ export default function DadosPessoais({ navigation }) {
 
         </View>
       </ScrollView>
+      <Modal
+        visible={saveModalVisible} transparent animationType="fade">
+        <View style={styles.modalOverlay}>
+          <View style={styles.deleteModal}>
+
+            <Text style={styles.modalTitle}>
+              Deseja Salvar esse contato?
+            </Text>
+
+            <Text style={styles.modalText}>
+              Ao salvar o contato os dados atuais serão substituidos pelos dados escolhidos.
+            </Text>
+
+            <View style={styles.buttonSection}>
+
+              <TouchableOpacity
+                style={styles.buttonExcluir}
+                onPress={() => setSaveModalVisible(false)}
+              >
+                <Text style={styles.textButtonExcluir}>Cancelar</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => enviarDadosVitima()}
+                style={styles.buttonEditar}
+              >
+                <Text style={styles.textButtonEditar}>Salvar</Text>
+              </TouchableOpacity>
+
+            </View>
+
+          </View>
+        </View>
+      </Modal>
     </View >
   );
 }

@@ -16,14 +16,18 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "package": "com.felipedeoliveira.SOSMulher"
+      "package": "com.felipedeoliveira.SOSMulher",
+      "config": {
+        "googleMaps": {
+          "apiKey": "chaveDaApiAqui"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font",
-      "expo-status-bar"
+      "expo-font"
     ],
     "extra": {
       "eas": {

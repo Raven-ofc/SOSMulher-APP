@@ -89,7 +89,7 @@ export const styles = StyleSheet.create({
     marginRight: 10,
   },
 
-  radioSelecionado: {
+  radioSelecionado: { 
     borderColor: '#D789B1',
   },
 
@@ -223,6 +223,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 12,
     fontSize: 15,
+    elevation: 3,
     color: "#50333D",
   },
   form: {

@@ -6,6 +6,8 @@ import MapView, { Marker } from 'react-native-maps'
 import { styles } from '../Styles/StyleLocal'
 import Feather from '@expo/vector-icons/Feather';
 import * as Location from 'expo-location'
+import axios from 'axios'
+import { usarVitima } from '../contextos/vitimaContexto'
 
 const { height } = Dimensions.get('window');
 
@@ -42,33 +44,95 @@ const endereco = [
   },
 
 ];
+const API_LOCAL = 'http://seuip:8000/api/atualizarLocalizacao'
 
 export default function Localizacao({ navigation }) {
 
+  const { vitimaLogada } = usarVitima();
+
   const [localizacaoAtual, setLocalizacaoAtual] = useState(null)
   const [erroLocalizacao, setErroLocalizacao] = useState(null)
+
+  const enviarLocalizacaoDB = async (latitude, longitude) => {
+    if (!vitimaLogada?.idVitima) {
+      console.log('Nenhuma vítima logada.')
+      return
+    }
+
+    try {
+      await axios.put(
+        `${API_LOCAL}/${vitimaLogada.idVitima}`, {
+        latitude,
+        longitude
+      }
+      )
+
+      console.log(
+        'Localização enviada:',
+        latitude,
+        longitude
+      )
+    } catch (error) {
+      console.log(
+        'Erro ao atualizar localização:',
+        error.response?.data || error.message
+      )
+    }
+  }
 
   useEffect(() => {
     let subscription = null
 
     const startLocationTracking = async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync()
-
-      if (status !== 'granted') {
-        setErroLocalizacao('A permissão para acessar a localização foi negada.');
+      if (!vitimaLogada?.idVitima) {
+        console.log('Nenhuma vítima logada.')
         return
       }
 
-      subscription = await Location.watchPositionAsync(
-        {
-          accuracy: Location.Accuracy.High,
-          timeInterval: 3000,
-          distanceInterval: 5,
-        },
-        (newLocation) => {
-          setLocalizacaoAtual(newLocation)
+      try {
+
+        const { status } = await Location.requestForegroundPermissionsAsync()
+
+        if (status !== 'granted') {
+          setErroLocalizacao('A permissão para acessar a localização foi negada.');
+          return
         }
-      )
+
+        const localizacaoInicial = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.High,
+        });
+
+        setLocalizacaoAtual(localizacaoInicial);
+
+        const { latitude, longitude } = localizacaoInicial.coords;
+
+        enviarLocalizacaoDB(latitude, longitude);
+
+        subscription = await Location.watchPositionAsync(
+          {
+            accuracy: Location.Accuracy.High,
+            timeInterval: 60000,
+            distanceInterval: 5,
+          },
+          (newLocation) => {
+            setLocalizacaoAtual(newLocation)
+
+            const { latitude, longitude } = newLocation.coords
+
+            enviarLocalizacaoDB(
+              latitude,
+              longitude
+            )
+          }
+        )
+      } catch (error) {
+        console.log('Erro ao obter localização',
+          error)
+
+        setErroLocalizacao(
+          'Não foi possível obter sua localização'
+        )
+      }
     }
 
     startLocationTracking()
@@ -80,7 +144,7 @@ export default function Localizacao({ navigation }) {
     }
   }
 
-    , [])
+    , [vitimaLogada])
 
   const [ModalVisible, setModalVisible] = useState(false);
 
@@ -180,14 +244,19 @@ export default function Localizacao({ navigation }) {
             latitude: localizacaoAtual.coords.latitude,
             longitude: localizacaoAtual.coords.longitude
           }}
-          title="Sua Localização atual"  
-        />
+          title="Sua Localização atual"
+        >
+          <Ionicons name='location-sharp' size={40} color={'#EC6E99'}></Ionicons>
+        </Marker>
         {endereco.map((item) => (
           <Marker
             key={item.id}
             coordinate={{ latitude: item.latitude, longitude: item.longitude }}
             title={item.nome}
-          />
+          >
+            {item.nome == 'Casa' ? (<Ionicons name='home' color={'#EC6E99'} size={40}></Ionicons>)
+              : (<Ionicons name='shield-checkmark' color={'#EC6E99'} size={40}></Ionicons>)}
+          </Marker>
         ))}
       </MapView>) : (
         <View style={styles.erroLoc}>
@@ -206,10 +275,10 @@ export default function Localizacao({ navigation }) {
       </View>
 
       <View style={styles.containerAlerta}>
-          <View style={styles.alertaVerde}>
-            <Feather name="shield" size={34} color="#53997B" />
-            <Text style={styles.tituloAviso}>Você está em segurança!</Text>
-          </View>
+        <View style={styles.alertaVerde}>
+          <Feather name="shield" size={34} color="#53997B" />
+          <Text style={styles.tituloAviso}>Você está em segurança!</Text>
+        </View>
       </View>
 
       <Modal

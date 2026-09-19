@@ -121,6 +121,7 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 14,
         paddingVertical: 12,
         fontSize: 15,
+        elevation: 3,
         color: "#50333D",
     },
     form: {
@@ -252,10 +253,10 @@ export const styles = StyleSheet.create({
         color: '#53997B',
         textAlign: 'center',
     },
-    containerAlerta:{
+    containerAlerta: {
         position: 'absolute',
-        bottom: 30,
-        right:0,
+        bottom: 70,
+        right: 0,
         left: 0,
         alignItems: 'center'
     }

@@ -77,4 +77,50 @@ export const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingHorizontal: 15,
   },
+ modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#50333D",
+    textAlign: 'center'
+  },
+
+  modalLabel: {
+    fontSize: 13,
+    color: "#777",
+    marginTop: 10
+  },
+
+  modalText: {
+    fontSize: 14,
+    marginTop: 3,
+    color: "#777",
+  },
+  deleteModal: {
+    width: "90%",
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    padding: 20,
+  },
+
+  buttonCancelar: {
+    backgroundColor: '#EC6E99',
+    borderRadius: 20,
+    marginVertical: 10,
+    padding: 15,
+    elevation: 2,
+    alignItems: 'center'
+  },
+  textButtonCancelar: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: '#FEF9FB',
+    fontWeight: 'bold'
+  },
 });

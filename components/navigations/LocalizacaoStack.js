@@ -2,7 +2,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Localizacao from '../Screens/localizacao';
-import EditarLocalizacao from '../Screens/editarLocalizacao';
 const Stack = createStackNavigator();
 
 export default function LocalizacaoStack() {
@@ -16,11 +15,6 @@ export default function LocalizacaoStack() {
       <Stack.Screen
         name="Localizacao"
         component={Localizacao}
-      />
-
-      <Stack.Screen
-        name="EditarLocalizacao"
-        component={EditarLocalizacao}
       />
 
     </Stack.Navigator>

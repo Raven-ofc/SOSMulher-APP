@@ -8,20 +8,13 @@ import Feather from '@expo/vector-icons/Feather';
 import * as Location from 'expo-location'
 import axios from 'axios'
 import { usarVitima } from '../contextos/vitimaContexto'
+import { ZoomIn } from 'react-native-reanimated'
+
+const AXIOS_ENDERURL = 'http://seuip:8000/api/endereco'
 
 const { height } = Dimensions.get('window');
 
 const endereco = [
-  {
-    id: '1',
-    nome: 'Casa',
-    bairro: 'Guaianazes',
-    rua: 'Inácio Moreira',
-    num: '444',
-    complemento: '',
-    latitude: -23.550093,
-    longitude: -46.400124,
-  },
   {
     id: '3',
     nome: '44º Distrito Policial',
@@ -48,10 +41,14 @@ const API_LOCAL = 'http://seuip:8000/api/atualizarLocalizacao'
 
 export default function Localizacao({ navigation }) {
 
+  const mapRef = useRef(null)
+
   const { vitimaLogada } = usarVitima();
 
   const [localizacaoAtual, setLocalizacaoAtual] = useState(null)
   const [erroLocalizacao, setErroLocalizacao] = useState(null)
+  const [enderecoVitima, setEnderecoVitima] = useState(null)
+  const [ModalVisible, setModalVisible] = useState(false);
 
   const enviarLocalizacaoDB = async (latitude, longitude) => {
     if (!vitimaLogada?.idVitima) {
@@ -79,6 +76,30 @@ export default function Localizacao({ navigation }) {
       )
     }
   }
+
+  const buscarEndereco = async () => {
+    try {
+      const response = await axios.get(
+        `${AXIOS_ENDERURL}/${vitimaLogada.idVitima}`
+      );
+
+      console.log("Endereço da vítima: ", response.data)
+
+      const endereco = response.data;
+
+      setEnderecoVitima(endereco)
+
+    } catch (error) {
+      if (error.response?.status === 404) {
+        console.log('A vitima ainda não possui endereço cadastrado')
+        return
+      }
+    }
+  }
+
+  useEffect(() => {
+    buscarEndereco();
+  }, [vitimaLogada]);
 
   useEffect(() => {
     let subscription = null
@@ -142,26 +163,57 @@ export default function Localizacao({ navigation }) {
         subscription.remove()
       }
     }
+  }, [vitimaLogada])
+
+  const darZoom = (local) => {
+    if (!mapRef.current) return
+
+    fecharModal()
+
+    mapRef.current.animateCamera(
+      {
+        center: {
+          latitude: Number(local.latitude),
+          longitude: Number(local.longitude,)
+        },
+        zoom: 17,
+      },
+      {
+        duration: 1000,
+      }
+    )
   }
 
-    , [vitimaLogada])
-
-  const [ModalVisible, setModalVisible] = useState(false);
+  const localSeguro = [
+    ...(enderecoVitima?.latitudeVitima != null && enderecoVitima?.longitudeVitima != null
+      ? [
+        {
+          id: enderecoVitima.id,
+          nome: "Sua Residência",
+          latitude: Number(enderecoVitima.latitudeVitima),
+          longitude: Number(enderecoVitima.longitudeVitima),
+        }
+      ] : []
+    ),
+    ...endereco,
+  ]
 
   const renderEndereco = ({ item }) => (
     <TouchableOpacity
-      onPress={() => {
-        fecharModal()
-        navigation.navigate('EditarLocalizacao', {
-          endereco: item
-        }
-        )
-      }}
-      style={styles.buttonEndereco}>
+      style={styles.buttonEndereco}
+      onPress={() => darZoom(item)}>
       <View style={styles.textos}>
         <Text style={styles.nome}>{item.nome}</Text>
       </View>
-      <Ionicons name='create-outline' size={30} color={'#D7A6BF'}></Ionicons>
+      <Ionicons
+        name={
+          item.nome === 'Sua Residência'
+            ? 'home'
+            : 'shield-checkmark'
+        }
+        size={25}
+        color="#EC6E99"
+      />
     </TouchableOpacity>
 
   );
@@ -231,6 +283,7 @@ export default function Localizacao({ navigation }) {
     <View style={styles.container}>
 
       {localizacaoAtual ? (<MapView
+        ref={mapRef}
         style={styles.mapaLocal}
         initialRegion={{
           latitude: localizacaoAtual.coords.latitude,
@@ -248,6 +301,15 @@ export default function Localizacao({ navigation }) {
         >
           <Ionicons name='location-sharp' size={40} color={'#EC6E99'}></Ionicons>
         </Marker>
+        {enderecoVitima?.latitudeVitima != null && enderecoVitima?.longitudeVitima != null && (
+          <Marker
+            key={enderecoVitima.id}
+            coordinate={{ latitude: Number(enderecoVitima.latitudeVitima), longitude: Number(enderecoVitima.longitudeVitima) }}
+            title="Sua residência"
+          >
+            <Ionicons name='home' color={'#EC6E99'} size={40}></Ionicons>
+          </Marker>
+        )}
         {endereco.map((item) => (
           <Marker
             key={item.id}
@@ -270,6 +332,19 @@ export default function Localizacao({ navigation }) {
           onPress={abrirModal}
           style={styles.buttonMapa}>
           <Ionicons name='map' size={30} color={'#D7A6BF'}></Ionicons>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            if (!localizacaoAtual) { return }
+            darZoom({
+              latitude: localizacaoAtual.coords.latitude,
+              longitude: localizacaoAtual.coords.longitude
+            })
+          }
+          }
+          style={styles.buttonMapa}>
+          <Ionicons name='location' size={30} color={'#D7A6BF'}></Ionicons>
         </TouchableOpacity>
 
       </View>
@@ -309,7 +384,7 @@ export default function Localizacao({ navigation }) {
             </View>
 
             <FlatList
-              data={endereco}
+              data={localSeguro}
               keyExtractor={(item) => item.id}
               renderItem={renderEndereco}
             />

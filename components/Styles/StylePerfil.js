@@ -89,7 +89,7 @@ export const styles = StyleSheet.create({
     marginRight: 10,
   },
 
-  radioSelecionado: { 
+  radioSelecionado: {
     borderColor: '#D789B1',
   },
 
@@ -238,5 +238,19 @@ export const styles = StyleSheet.create({
   scrollContent: {
     width: '100%',
     justifyContent: 'center',
-  }
+  },
+  buttonCancelar: {
+    backgroundColor: '#EC6E99',
+    borderRadius: 20,
+    marginVertical: 10,
+    padding: 15,
+    elevation: 2,
+    alignItems: 'center'
+  },
+  textButtonCancelar: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: '#FEF9FB',
+    fontWeight: 'bold'
+  },
 });

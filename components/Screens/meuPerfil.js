@@ -10,8 +10,11 @@ export default function MeuPerfil({ navigation }) {
   const { vitimaLogada, sairDaConta } = usarVitima()
   const [erroImagem, setErroImagem] = useState(false)
   const urlImagem = vitimaLogada?.imagemVitima
-    ? `http://seuip:8000/storage/${vitimaLogada.imagemVitima}`
+    ? `http://seuips:8000/storage/${vitimaLogada.imagemVitima}`
     : null
+
+    console.log('Imagem salva:', vitimaLogada?.imagemVitima)
+console.log('URL da imagem:', urlImagem)
 
   const sair = () => {
 

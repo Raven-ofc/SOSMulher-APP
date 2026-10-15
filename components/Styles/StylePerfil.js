@@ -253,4 +253,55 @@ export const styles = StyleSheet.create({
     color: '#FEF9FB',
     fontWeight: 'bold'
   },
+
+  fundoModal: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.45)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+
+  modalImagem: {
+    width: '100%',
+    maxWidth: 350,
+    backgroundColor: '#FEF9FB',
+    borderRadius: 18,
+    padding: 24,
+  },
+
+  tituloModal: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#50333D',
+    marginBottom: 8,
+  },
+
+  textoModal: {
+    fontSize: 14,
+    color: '#725C65',
+    marginBottom: 18,
+  },
+
+  opcaoModal: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingVertical: 15,
+    borderTopWidth: 1,
+    borderTopColor: '#EADDE3',
+  },
+
+  textoOpcao: {
+    fontSize: 16,
+    color: '#50333D',
+  },
+
+  cancelarModal: {
+    textAlign: 'center',
+    color: '#D789B1',
+    fontWeight: 'bold',
+    marginTop: 14,
+  },
+
 });

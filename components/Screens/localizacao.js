@@ -37,7 +37,7 @@ const endereco = [
   },
 
 ];
-const API_LOCAL = 'http://seuip:8000/api/atualizarLocalizacao'
+const API_LOCAL = 'http://26.14.131.2:8000/api/atualizarLocalizacao'
 
 export default function Localizacao({ navigation }) {
 

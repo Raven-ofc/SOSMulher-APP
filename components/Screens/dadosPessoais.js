@@ -20,7 +20,10 @@ export default function DadosPessoais({ navigation }) {
   const [erroImagem, setErroImagem] = useState(false)
   const [imagem, setImagem] = useState(null);
   const [ModalErroVisible, setModalErroVisible] = useState(false)
+  const [modalImagemVisible, setModalImagemVisible] = useState(false)
   const [mensagemErro, setMensagemErro] = useState('')
+
+
 
   const urlImagem = vitimaLogada?.imagemVitima ? `http://seuip:8000/storage/${vitimaLogada.imagemVitima}` : null
   const AXIOS_IMGURL = 'http://seuip:8000/api/atualizarImagem'
@@ -43,6 +46,8 @@ export default function DadosPessoais({ navigation }) {
       }
       )
 
+
+      console.log('Resposta da imagem:', response.data)
       atualizarVitima({
         imagemVitima: response.data.imagemVitima
       })
@@ -62,34 +67,56 @@ export default function DadosPessoais({ navigation }) {
     }
   }
 
-  const escolherImagem = async () => {
-    const permissaoImagem = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  const escolherImagem = async (origem) => {
+    try {
+      if (origem === "galeria") {
+        const permissaoImagem = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if (!permissaoImagem.granted) {
-      setModalErroVisible(true)
-      setMensagemErro('Permissão Necessária!',
-        'Precisamos de acesso à galeria para escolher a foto.')
-      return
-    }
+        if (!permissaoImagem.granted) {
+          setModalErroVisible(true)
+          setMensagemErro('Permissão Necessária!',
+            'Precisamos de acesso à galeria para escolher a foto.')
+          return
+        }
+      } else {
+        const permissaoImagem = await ImagePicker.requestCameraPermissionsAsync()
 
-    const resultadoGaleria = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images'],
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 0.8
-    })
+        if (!permissaoImagem.granted) {
+          setModalErroVisible(true)
+          setMensagemErro('Permissão Necessária!',
+            'Precisamos de acesso à câmera para escolher a foto'
+          )
+        }
+      }
+      const resultadoGaleria = origem === 'galeria'
+        ? await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ['images'],
+          allowsEditing: true,
+          aspect: [1, 1],
+          quality: 0.8
+        })
+        : await ImagePicker.launchCameraAsync({
+          mediaTypes: ['images'],
+          allowsEditing: true,
+          aspect: [1, 1],
+          quality: 0.8
+        })
 
     if (!resultadoGaleria.canceled) {
-      const foto = resultadoGaleria.assets[0]
-      setImagem(foto)
-      setErroImagem(false)
-      await atualizarImagem(foto);
-    }
+        const foto = resultadoGaleria.assets[0]
+        setImagem(foto)
+        setErroImagem(false)
+        await atualizarImagem(foto);
+      }
+    }catch(erro){
+    setMensagemErro('Não foi possível selecionar a imagem')
+    setModalErroVisible(true)
   }
+}
 
   const enviarDadosVitima = () => {
 
-    if(!nome || !fone || !email){
+    if (!nome || !fone || !email) {
       setMensagemErro('Não deixe os campos em branco!')
       setSaveModalVisible(false)
       setModalErroVisible(true)
@@ -147,7 +174,7 @@ export default function DadosPessoais({ navigation }) {
 
           <View style={styles.principalCont}>
             <View style={styles.containerFoto}>
-              <TouchableOpacity onPress={escolherImagem}>
+              <TouchableOpacity onPress={()=> setModalImagemVisible(true)}>
                 <Image
                   source={
                     imagem
@@ -260,15 +287,58 @@ export default function DadosPessoais({ navigation }) {
               {mensagemErro}
             </Text>
 
-              <TouchableOpacity
-                style={styles.buttonCancelar}
-                onPress={() => [
-                  setSaveModalVisible(false),
-                  setModalErroVisible(false)]}
-              >
-                <Text style={styles.textButtonCancelar}>OK</Text>
-              </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonCancelar}
+              onPress={() => [
+                setSaveModalVisible(false),
+                setModalErroVisible(false)]}
+            >
+              <Text style={styles.textButtonCancelar}>OK</Text>
+            </TouchableOpacity>
 
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        visible={modalImagemVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setModalImagemVisible(false)}
+      >
+        <View style={styles.fundoModal}>
+          <View style={styles.modalImagem}>
+            <Text style={styles.tituloModal}>Alterar foto</Text>
+            <Text style={styles.textoModal}>
+              Como você deseja escolher sua foto?
+            </Text>
+
+            <TouchableOpacity
+              style={styles.opcaoModal}
+              onPress={() => {
+                setModalImagemVisible(false);
+                escolherImagem('camera');
+              }}
+            >
+              <Ionicons name="camera" size={22} color="#EC6E99" />
+              <Text style={styles.textoOpcao}>Tirar foto</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.opcaoModal}
+              onPress={() => {
+                setModalImagemVisible(false);
+                escolherImagem('galeria');
+              }}
+            >
+              <Ionicons name="image" size={22} color="#EC6E99" />
+              <Text style={styles.textoOpcao}>Escolher da galeria</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => setModalImagemVisible(false)}
+            >
+              <Text style={styles.cancelarModal}>Cancelar</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>

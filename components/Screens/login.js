@@ -84,7 +84,7 @@ export default function Login({ navigation }) {
 
           <View style={styles.form}>
             <View style={styles.inputContainer}>
-              <Feather name="mail" size={24} color="black" />
+              <Feather name="mail" size={24} color="black" style={styles.icon} />
               <TextInput style={styles.input}
                 placeholder="Email"
                 placeholderTextColor={"#915e70"}

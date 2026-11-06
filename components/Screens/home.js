@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react'
 
 import {
   View,
@@ -8,20 +8,23 @@ import {
   TouchableOpacity,
   Animated,
   ScrollView
-} from 'react-native';
+} from 'react-native'
 
-import { useNavigation } from '@react-navigation/native';
-import { styles } from '../Styles/StyleHome';
-import Feather from '@expo/vector-icons/Feather';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native'
+import { styles } from '../Styles/StyleHome'
+import Feather from '@expo/vector-icons/Feather'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import { Ionicons } from '@expo/vector-icons'
+import { usarVitima } from '../contextos/vitimaContexto'
 
 export default function Home() {
 
-  const navigation = useNavigation();
+  const { vitimaLogada, distanciaAgressor, statusAlerta } = usarVitima()
 
-  const onda1 = useRef(new Animated.Value(0)).current;
-  const onda2 = useRef(new Animated.Value(0)).current;
+  const navigation = useNavigation()
+
+  const onda1 = useRef(new Animated.Value(0)).current
+  const onda2 = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
     const animacao1 = Animated.loop(
@@ -42,7 +45,7 @@ export default function Home() {
 
       ])
 
-    );
+    )
     const animacao2 = Animated.loop(
 
       Animated.sequence([
@@ -63,36 +66,70 @@ export default function Home() {
 
       ])
 
-    );
+    )
 
-    animacao1.start();
-    animacao2.start();
+    animacao1.start()
+    animacao2.start()
     return () => {
-      animacao1.stop();
-      animacao2.stop();
-    };
+      animacao1.stop()
+      animacao2.stop()
+    }
 
-  }, []);
+  }, [])
 
   const escalaOnda1 = onda1.interpolate({
     inputRange: [0, 1],
     outputRange: [1, 2],
-  });
+  })
 
   const opacidadeOnda1 = onda1.interpolate({
     inputRange: [0, 0.5, 1],
     outputRange: [0.5, 0.2, 0],
-  });
+  })
 
   const escalaOnda2 = onda2.interpolate({
     inputRange: [0, 1],
     outputRange: [1, 2],
-  });
+  })
 
   const opacidadeOnda2 = onda2.interpolate({
     inputRange: [0, 0.5, 1],
     outputRange: [0.5, 0.2, 0],
-  });
+  })
+
+  const configuracaoAlerta = {
+    aguardando: {
+      cor: '#6B7280',
+      icone: 'shield',
+      titulo: 'BUSCANDO LOCALIZAÇÃO DO AGRESSOR',
+      mensagem: 'Obtendo as coordenadas para o monitoramento!'
+    },
+
+    seguro: {
+      cor: '#53997B',
+      icone: 'shield',
+      titulo: 'VOCÊ ESTÁ EM SEGURANÇA!',
+      mensagem: 'O agressor está fora da zona de alerta.'
+    },
+
+    aproximacao: {
+      cor: '#eece6d',
+      icone: 'alert-triangle',
+      titulo: 'ALERTA DE APROXIMAÇÃO',
+      mensagem: 'Atenção! o agressor está nas proximidades'
+    },
+
+    critico: {
+      cor: '#EF4444',
+      icone: 'alert-triangle',
+      titulo: 'ALERTA CRÍTICO!',
+      mensagem: 'O agressor ultrapassou o limite da medida protetiva, as autoridades foram alertadas!'
+    }
+  }
+
+  console.log('STATUS RECEBIDO NA HOME:', statusAlerta)
+
+  const alertaAtual = configuracaoAlerta[statusAlerta] || configuracaoAlerta.aguardando
 
   return (
 
@@ -100,10 +137,50 @@ export default function Home() {
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
 
-        <View style={styles.alertaVerde}>
-          <Feather name="shield" size={34} color="#53997B" />
-          <Text style={styles.titulo}>Você está em segurança!</Text>
-          <Text style={styles.subTitulo}>O agressor se encontra longe do raio da medida.</Text>
+        <View
+          style={{
+            backgroundColor: alertaAtual.cor,
+            padding: 10,
+            borderRadius: 10,
+            height: 150,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginHorizontal: 20,
+            marginVertical: 40,
+            elevation:2,
+          }}
+        >
+          <Feather name={alertaAtual.icone} size={34} color="#FFFFFF" />
+
+          <View style={{ flex: 1, }}>
+            <Text
+              style={{
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                textAlign: 'center',
+                fontSize: 16
+              }}
+            >
+              {alertaAtual.titulo}
+            </Text>
+
+            <Text style={{ color: '#FFFFFF', marginTop: 4, textAlign: 'center', }}>
+              {alertaAtual.mensagem}
+            </Text>
+
+            {distanciaAgressor !== null && (
+              <Text
+                style={{
+                  color: '#FFFFFF',
+                  marginTop: 5,
+                  textAlign: 'center',
+                  fontWeight: 'bold'
+                }}
+              >
+                Distância: {distanciaAgressor.toFixed(0)} metros
+              </Text>
+            )}
+          </View>
         </View>
 
 
@@ -140,7 +217,7 @@ export default function Home() {
                 },
               ]}
             />
-            <TouchableOpacity onPress={() => navigation.navigate('Alerta')}
+            <TouchableOpacity onPress={() => navigation.navigate('RegistrarViolacao')}
               style={styles.button}>
               <Text style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>
                 Botão do Pânico
@@ -189,6 +266,6 @@ export default function Home() {
 
     </View>
 
-  );
+  )
 }
 

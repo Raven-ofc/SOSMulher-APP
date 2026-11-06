@@ -15,6 +15,9 @@ export default function DadosPessoais({ navigation }) {
   const [nome, setNome] = useState(vitimaLogada.nomeVitima)
   const [email, setEmail] = useState(vitimaLogada.emailVitima)
   const [fone, setFone] = useState(vitimaLogada.telefoneVitima)
+  const [dataNasc, setDataNasc] = useState(vitimaLogada.dataNascimentoVitima)
+  const [nomePai, setNomePai] = useState(vitimaLogada.paiVitima)
+  const [nomeMae, setNomeMae] = useState(vitimaLogada.maeVitima)
   const [carregando, setCarregando] = useState(false)
   const [saveModalVisible, setSaveModalVisible] = useState(false)
   const [erroImagem, setErroImagem] = useState(false)
@@ -102,17 +105,25 @@ export default function DadosPessoais({ navigation }) {
           quality: 0.8
         })
 
-    if (!resultadoGaleria.canceled) {
+      if (!resultadoGaleria.canceled) {
         const foto = resultadoGaleria.assets[0]
         setImagem(foto)
         setErroImagem(false)
         await atualizarImagem(foto);
       }
-    }catch(erro){
-    setMensagemErro('Não foi possível selecionar a imagem')
-    setModalErroVisible(true)
+    } catch (erro) {
+      setMensagemErro('Não foi possível selecionar a imagem')
+      setModalErroVisible(true)
+    }
   }
-}
+
+  const formatarData = (data) => {
+    if (!data) return '';
+
+    const [ano, mes, dia] = data.split('-');
+
+    return `${dia}/${mes}/${ano}`;
+  };
 
   const enviarDadosVitima = () => {
 
@@ -172,56 +183,110 @@ export default function DadosPessoais({ navigation }) {
             <Text style={styles.headerTitulo}>Seus Dados</Text>
           </View>
 
-          <View style={styles.principalCont}>
-            <View style={styles.containerFoto}>
-              <TouchableOpacity onPress={()=> setModalImagemVisible(true)}>
-                <Image
-                  source={
-                    imagem
-                      ? { uri: imagem.uri }
-                      : urlImagem && !erroImagem
-                        ? { uri: urlImagem }
-                        : require('../../assets/img_sem_foto.jpg')
-                  }
-                  onError={() => setErroImagem(true)}
-                  style={styles.fotoCont} />
-                <View style={styles.mudarFoto}>
-                  <Ionicons name="create-outline" size={25} color={"#EC6E99"}></Ionicons>
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-
           <View style={styles.card}>
 
-            <Text style={styles.cardTitulo}>Seu Perfil</Text>
+            <View style={styles.principalCont}>
+              <View style={styles.containerFoto}>
+                <TouchableOpacity onPress={() => setModalImagemVisible(true)}>
+                  <Image
+                    source={
+                      imagem
+                        ? { uri: imagem.uri }
+                        : urlImagem && !erroImagem
+                          ? { uri: urlImagem }
+                          : require('../../assets/img_sem_foto.jpg')
+                    }
+                    onError={() => setErroImagem(true)}
+                    style={styles.fotoCont} />
+                  <View style={styles.mudarFoto}>
+                    <Ionicons name="create-outline" size={25} color={"#EC6E99"}></Ionicons>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <Text style={styles.cardTitulo}>{nome}</Text>
 
             <View style={styles.form}>
-              <TextInput
-                style={styles.input}
-                placeholder="Nome completo..."
-                placeholderTextColor={"#915e70"}
-                value={nome}
-                onChangeText={setNome}
-              />
 
-              <TextInput
-                style={styles.input}
-                placeholderTextColor={"#915e70"}
-                placeholder="Telefone..."
-                value={fone}
-                onChangeText={setFone}
-              />
+              <Text style={styles.textInput}>Nome</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Nome completo..."
+                  placeholderTextColor={"#915e70"}
+                  value={nome}
+                  onChangeText={setNome}
+                  editable={false}
+                />
+              </View>
 
-              <TextInput
-                style={styles.input}
-                placeholder="Email..."
-                placeholderTextColor={"#915e70"}
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-              />
+              <Text style={styles.textInput}>Data de Nascimento</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Data de Nascimento..."
+                  placeholderTextColor={"#915e70"}
+                  value={formatarData(dataNasc)}
+                  onChangeText={setDataNasc}
+                  editable={false}
+                />
+              </View>
+
+              <Text style={styles.textInput}>Nome da Mãe</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Nome da mãe..."
+                  placeholderTextColor={"#915e70"}
+                  value={nomeMae}
+                  onChangeText={setNomeMae}
+                  editable={false}
+                />
+              </View>
+
+              {nomePai?.trim() !== '' && nomePai != null && (
+                <>
+                  <Text style={styles.textInput}>Nome do Pai</Text>
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Nome completo..."
+                      placeholderTextColor={"#915e70"}
+                      value={nomePai}
+                      onChangeText={setNomePai}
+                      editable={false}
+                    />
+                  </View>
+                </>
+              )}
+
+              <Text style={styles.textInput}>Telefone</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholderTextColor={"#915e70"}
+                  placeholder="Telefone..."
+                  value={fone}
+                  onChangeText={setFone}
+                />
+
+                <Ionicons name="pencil" size={20} color={"#915e70"} />
+              </View>
+
+              <Text style={styles.textInput}>Email</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Email..."
+                  placeholderTextColor={"#915e70"}
+                  value={email}
+                  onChangeText={setEmail}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+                <Ionicons name="pencil" size={20} color={"#915e70"} />
+              </View>
             </View>
 
             <View style={styles.buttonSection}>
@@ -246,11 +311,11 @@ export default function DadosPessoais({ navigation }) {
           <View style={styles.deleteModal}>
 
             <Text style={styles.modalTitle}>
-              Deseja Salvar esse contato?
+              Deseja editar seu perfil?
             </Text>
 
             <Text style={styles.modalText}>
-              Ao salvar o contato os dados atuais serão substituidos pelos dados escolhidos.
+              Ao salvar os seus dados atuais serão substituidos pelos dados escolhidos.
             </Text>
 
             <View style={styles.buttonSection}>
@@ -280,7 +345,7 @@ export default function DadosPessoais({ navigation }) {
           <View style={styles.deleteModal}>
 
             <Text style={styles.modalTitle}>
-              Erro ao Fazer o Login.
+              Erro ao editar o perfil.
             </Text>
 
             <Text style={styles.modalText}>

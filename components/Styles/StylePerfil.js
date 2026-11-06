@@ -37,6 +37,7 @@ export const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 100,
+    elevation:3
   },
   nomeCont: {
     fontWeight: 'bold',
@@ -174,8 +175,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "#FEF9FB",
     padding: 3,
     borderRadius: 50,
-    borderColor: "#EC6E99",
-    borderWidth: 1
+    elevation:2
   },
   containerButtons: {
     backgroundColor: "#fff",
@@ -214,17 +214,24 @@ export const styles = StyleSheet.create({
     margin: 20,
     elevation: 2
   },
-  input: {
+  inputContainer: {
     backgroundColor: "#FEF9FB",
     borderWidth: 1,
     borderColor: "#EC6E99",
     borderRadius: 12,
     marginVertical: 10,
     paddingHorizontal: 14,
-    paddingVertical: 12,
-    fontSize: 15,
+    paddingVertical: 3,
+    fontSize: 15  ,
     elevation: 3,
     color: "#50333D",
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  input: {
+    flex: 1,
+    height: 50,
   },
   form: {
     width: '100%',
@@ -233,7 +240,9 @@ export const styles = StyleSheet.create({
   cardTitulo: {
     color: "#50333D",
     fontWeight: 'bold',
-    fontSize: 16
+    fontSize: 20,
+    textAlign: 'center',
+    marginVertical:10,
   },
   scrollContent: {
     width: '100%',

@@ -35,7 +35,7 @@ export default function AlertaEnviado() {
         </View>
       </View>
       <View style={styles.box}>
-        <TouchableOpacity onPress={()=> navigation.goBack()} style={styles.button}>
+        <TouchableOpacity onPress={()=> navigation.navigate('Home')} style={styles.button}>
           <Text style={styles.textButton}>Entendi</Text>
         </TouchableOpacity>
       </View>

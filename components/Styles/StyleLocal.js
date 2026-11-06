@@ -73,7 +73,7 @@ export const styles = StyleSheet.create({
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         padding: 20,
-        height: '50%'
+        height: '65%'
     },
     barra: {
         width: 45,
@@ -222,7 +222,7 @@ export const styles = StyleSheet.create({
         elevation: 2,
     },
     areaArrastar: {
-        height: 80,
+        height: 50,
     },
     mapaLocal: {
         flex: 1,
@@ -259,5 +259,11 @@ export const styles = StyleSheet.create({
         right: 0,
         left: 0,
         alignItems: 'center'
+    },
+    botaoFiltro: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        gap: 8,
+        paddingVertical: 15
     }
 });

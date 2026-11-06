@@ -14,7 +14,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 
-const AXIOS_ENDERURL = 'http://seuip:8000/api/recuperarSenha'
+const AXIOS_ENDERURL = 'http://seuip:8000/api/enviarCodigo'
 
 export default function EsqueciMinhaSenha({ navigation }) {
   const [email, setEmail] = useState('');
@@ -38,11 +38,12 @@ export default function EsqueciMinhaSenha({ navigation }) {
         AXIOS_ENDERURL, { email: email.trim() }
       )
 
-      setmodalSenhaVisible(true)
-      setMensagemSucesso('Sua nova senha chegara via Email!')
+      navigation.navigate('ConfirmarEmail', {
+        email: email.trim()
+      });
     } catch (erro) {
       setModalErroVisible(true)
-      setMensagemErro( erro.response?.data?.message ||'Não foi possível processar a solicitação, Tente novamente')
+      setMensagemErro(erro.response?.data?.message || 'Não foi possível processar a solicitação, Tente novamente')
     } finally {
       setCarregando(false)
     }
@@ -63,7 +64,7 @@ export default function EsqueciMinhaSenha({ navigation }) {
       <View style={styles.box}>
         <Text style={styles.subtitle}>Email cadastrado</Text>
         <View style={styles.inputContainer}>
-          <Feather name="mail" size={24} color="black" />
+          <Feather name="mail" size={24} color="black" style={styles.icon} />
           <TextInput
             style={styles.input}
             placeholder="Email..."
@@ -89,7 +90,7 @@ export default function EsqueciMinhaSenha({ navigation }) {
           <View style={styles.deleteModal}>
 
             <Text style={styles.modalTitle}>
-              Erro ao Fazer o Login.
+              Erro ao verificar Email.
             </Text>
 
             <Text style={styles.modalText}>

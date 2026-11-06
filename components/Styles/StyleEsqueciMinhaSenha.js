@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
@@ -7,25 +7,25 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FEF9FB',
     padding: 8,
   },
-  box:{
+  box: {
     height: "30%",
     flexDirection: 'column',
     justifyContent: 'center',
     padding: 10,
   },
-  logo:{
+  logo: {
     width: 200,
     height: 200,
     alignSelf: 'center',
   },
 
-  title:{
+  title: {
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#50333D',
   },
-  subtitle:{
+  subtitle: {
     fontSize: 20,
     textAlign: 'center',
     color: '#D7A6BF',
@@ -34,11 +34,13 @@ export const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: '#EC6E99',
     borderRadius: 8,
     paddingHorizontal: 15,
     marginVertical: 8,
+    elevation: 3,
+    backgroundColor: '#fff',  
   },
   icon: {
     marginRight: 8,
@@ -49,12 +51,13 @@ export const styles = StyleSheet.create({
     fontSize: 20,
   },
 
-  button:{
+  button: {
     backgroundColor: '#EC6E99',
     borderRadius: 50,
     padding: 15,
+    elevation:2
   },
-  textButton:{
+  textButton: {
     fontSize: 20,
     textAlign: 'center',
     color: '#ffffff',
@@ -64,7 +67,7 @@ export const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingHorizontal: 15,
   },
- modalOverlay: {
+  modalOverlay: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
@@ -95,7 +98,7 @@ export const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 20,
   },
-buttonCancelar: {
+  buttonCancelar: {
     backgroundColor: '#EC6E99',
     borderRadius: 20,
     marginVertical: 10,

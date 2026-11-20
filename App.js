@@ -10,7 +10,6 @@ import redefinirSenha from './components/Screens/RedefinirSenhaEmail'
 
 import HomeTabs from './components/Screens/HomeTabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import DetalheAnjo from './components/Screens/detalheAnjo';
 import * as Notifications from 'expo-notifications'
 import { LogBox } from 'react-native'
 
@@ -19,19 +18,18 @@ LogBox.ignoreLogs([
   '`expo-notifications` functionality is not fully supported in Expo Go',
 ])
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowBanner: true,
+    shouldShowList: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+})
 
 const Stack = createStackNavigator();
 
 export default function App() {
-
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowBanner: true,
-      shouldShowList: true,
-      shouldPlaySound: true,
-      shouldSetBadge: true,
-    }),
-  })
 
   return (
     <SafeAreaProvider>
@@ -72,11 +70,6 @@ export default function App() {
           <Stack.Screen
             name="HomeTabs"
             component={HomeTabs}
-          />
-
-          <Stack.Screen
-            name="DetalheAnjo"
-            component={DetalheAnjo}
           />
 
         </Stack.Navigator>

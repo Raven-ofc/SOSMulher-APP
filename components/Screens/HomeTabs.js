@@ -3,7 +3,6 @@ import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import HomeStack from '../navigations/HomeStack';
 import LocalizacaoStack from '../navigations/LocalizacaoStack';
-import AnjoStack from '../navigations/AnjoStack';
 import PerfilStack from '../navigations/PerfilStack';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets, SafeAreaProvider } from 'react-native-safe-area-context';
@@ -55,16 +54,6 @@ export default function HomeTabs({ route }) {
             ),
           }}
         />
-
-        {/*<Tab.Screen
-          name="Guardiões"
-          component={AnjoStack}
-          options={{
-            tabBarIcon: ({ color, size}) =>(
-              <Ionicons name="call" size={size} color={color}/>
-            ),
-          }}
-        />*/}
 
         <Tab.Screen
           name="Perfil"

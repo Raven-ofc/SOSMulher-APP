@@ -15,6 +15,8 @@ export default function DadosPessoais({ navigation }) {
     const { vitimaLogada, atualizarVitima } = usarVitima()
     const [email, setEmail] = useState(vitimaLogada.emailVitima)
     const [mostrarSenha, setMostrarSenha] = useState(false)
+    const [mostrarSenha2, setMostrarSenha2] = useState(false)
+    const [mostrarSenha3, setMostrarSenha3] = useState(false)
 
     const [senhaAntiga, setSenhaAntiga] = useState('');
     const [senhaAtual, setSenhaAtual] = useState('');
@@ -134,8 +136,8 @@ export default function DadosPessoais({ navigation }) {
 
                             <View style={styles.inputContainer}>
 
-                                <TouchableOpacity onPress={() => setMostrarSenha(!mostrarSenha)}>
-                                    <Feather name={mostrarSenha ? "eye-off" : "eye"} size={24} color="#bc5478" style={styles.icon} />
+                                <TouchableOpacity onPress={() => setMostrarSenha2(!mostrarSenha2)}>
+                                    <Feather name={mostrarSenha2 ? "eye-off" : "eye"} size={24} color="#bc5478" style={styles.icon} />
                                 </TouchableOpacity>
                                 <TextInput style={styles.input}
                                     placeholder="Nova Senha..."
@@ -143,7 +145,7 @@ export default function DadosPessoais({ navigation }) {
                                     value={senhaAtual}
                                     color={'#b00c45'}
                                     onChangeText={setSenhaAtual}
-                                    secureTextEntry={!mostrarSenha}
+                                    secureTextEntry={!mostrarSenha2}
                                     autoCapitalize="none"
                                 ></TextInput>
                             </View>
@@ -152,8 +154,8 @@ export default function DadosPessoais({ navigation }) {
 
                             <View style={styles.inputContainer}>
 
-                                <TouchableOpacity onPress={() => setMostrarSenha(!mostrarSenha)}>
-                                    <Feather name={mostrarSenha ? "eye-off" : "eye"} size={24} color="#bc5478" style={styles.icon} />
+                                <TouchableOpacity onPress={() => setMostrarSenha3(!mostrarSenha3)}>
+                                    <Feather name={mostrarSenha3 ? "eye-off" : "eye"} size={24} color="#bc5478" style={styles.icon} />
                                 </TouchableOpacity>
                                 <TextInput style={styles.input}
                                     placeholder="Confirmar Senha..."
@@ -162,7 +164,7 @@ export default function DadosPessoais({ navigation }) {
                                     color={'#b00c45'}
                                     autoCapitalize="none"
                                     onChangeText={setConfirmarSenha}
-                                    secureTextEntry={!mostrarSenha}
+                                    secureTextEntry={!mostrarSenha3}
                                 ></TextInput>
 
                             </View>

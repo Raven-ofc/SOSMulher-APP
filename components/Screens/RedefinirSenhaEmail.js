@@ -12,6 +12,7 @@ const API_URL = 'http://seuip:8000/api/recuperarSenha'
 export default function DadosPessoais({ navigation, route }) {
     const email = route.params?.email || ''
     const [mostrarSenha, setMostrarSenha] = useState(false)
+    const [mostrarSenha2, setMostrarSenha2] = useState(false)
 
     const [senhaAtual, setSenhaAtual] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
@@ -127,8 +128,8 @@ export default function DadosPessoais({ navigation, route }) {
 
                             <View style={styles.inputContainer}>
 
-                                <TouchableOpacity onPress={() => setMostrarSenha(!mostrarSenha)}>
-                                    <Feather name={mostrarSenha ? "eye-off" : "eye"} size={24} color="#bc5478" style={styles.icon} />
+                                <TouchableOpacity onPress={() => setMostrarSenha2(!mostrarSenha2)}>
+                                    <Feather name={mostrarSenha2 ? "eye-off" : "eye"} size={24} color="#bc5478" style={styles.icon} />
                                 </TouchableOpacity>
                                 <TextInput style={styles.input}
                                     placeholder="Confirmar Senha..."
@@ -137,7 +138,7 @@ export default function DadosPessoais({ navigation, route }) {
                                     color={'#b00c45'}
                                     autoCapitalize="none"
                                     onChangeText={setConfirmarSenha}
-                                    secureTextEntry={!mostrarSenha}
+                                    secureTextEntry={!mostrarSenha2}
                                 ></TextInput>
 
                             </View>

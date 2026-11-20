@@ -67,28 +67,28 @@ export default function MeuPerfil({ navigation }) {
           </View>
 
           <View style={styles.buttonPerfilFlex}>
-            <TouchableOpacity style={styles.buttonPerfil}>
-              <Text style={styles.textoButtonContainer}>Dicas de segurança</Text>
+            <TouchableOpacity style={styles.buttonPerfil} onPress={()=>navigation.navigate('Redefinir')}>
+              <Text style={styles.textoButtonContainer}>Redefinir Senha</Text>
               <Ionicons name="arrow-forward" size={25} color={"#FBB0C6"}></Ionicons>
             </TouchableOpacity>
           </View>
 
           <View style={styles.buttonPerfilFlex}>
-            <TouchableOpacity style={styles.buttonPerfil}>
-              <Text style={styles.textoButtonContainer}>Ajuda e suporte</Text>
+            <TouchableOpacity style={styles.buttonPerfil} onPress={()=>navigation.navigate('GuiaApp')}>
+              <Text style={styles.textoButtonContainer}>Guia do Aplicativo</Text>
               <Ionicons name="arrow-forward" size={25} color={"#FBB0C6"}></Ionicons>
             </TouchableOpacity>
 
           </View>
           <View style={styles.buttonPerfilFlex}>
-            <TouchableOpacity style={styles.buttonPerfil}>
+            <TouchableOpacity style={styles.buttonPerfil} onPress={()=>navigation.navigate('Privacidade')}>
               <Text style={styles.textoButtonContainer}>Privacidade</Text>
               <Ionicons name="arrow-forward" size={25} color={"#FBB0C6"}></Ionicons>
             </TouchableOpacity>
           </View>
 
           <View style={styles.buttonPerfilFlex}>
-            <TouchableOpacity style={styles.ultimoButton}>
+            <TouchableOpacity style={styles.ultimoButton} onPress={()=>navigation.navigate('SobreAPP')}>
               <Text style={styles.textoButtonContainer}>Sobre o app</Text>
               <Ionicons name="arrow-forward" size={25} color={"#FBB0C6"}></Ionicons>
             </TouchableOpacity>

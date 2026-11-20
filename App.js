@@ -6,6 +6,7 @@ import Login from './components/Screens/login';
 import EsqueciMinhaSenha from './components/Screens/EsqueciMinhaSenha';
 import ConfirmarEmail from './components/Screens/ConfirmarEmail'
 import RegistrarViolacao from './components/Screens/RegistrarViolacao';
+import redefinirSenha from './components/Screens/RedefinirSenhaEmail'
 
 import HomeTabs from './components/Screens/HomeTabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -46,6 +47,11 @@ export default function App() {
           <Stack.Screen
             name="Inicio"
             component={Inicio}
+          />
+
+          <Stack.Screen
+            name='redefinirSenha'
+            component={redefinirSenha}
           />
 
           <Stack.Screen

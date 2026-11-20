@@ -593,19 +593,6 @@ export default function Localizacao({ navigation }) {
           <Ionicons name='location-sharp' size={40} color={'#EC6E99'}></Ionicons>
         </Marker>
 
-        {localizacaoAgressor.map((agressor) => (
-          <Marker
-            key={agressor.idAgressor}
-            coordinate={{
-              latitude: agressor.latitude,
-              longitude: agressor.longitude
-            }}
-            title={agressor.nomeAgressor}
-            description="Monitorado por nosso sistema.">
-            <Ionicons name="person" size={40} color={'#EF4444'} />
-          </Marker>
-        ))}
-
         {enderecoVitima?.latitudeVitima != null && enderecoVitima?.longitudeVitima != null && (
           <Marker
             key={enderecoVitima.id}
@@ -666,20 +653,6 @@ export default function Localizacao({ navigation }) {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => {
-            if (localizacaoAgressor.length === 0) return;
-
-            const agressorMaisProximo = [...distanciasAgressores]
-              .sort((a, b) => a.distancia - b.distancia)[0];
-
-            darZoom(agressorMaisProximo);
-          }}
-          style={styles.buttonMapa}
-        >
-          <Ionicons name='person' size={30} color={'#ea0444'} />
-        </TouchableOpacity>
-
-        <TouchableOpacity
           onPress={zoomDelegaciaProxima}
           style={styles.buttonMapa}
           disabled={delegacias.length === 0}
@@ -713,12 +686,6 @@ export default function Localizacao({ navigation }) {
             <Text style={{ color: '#ffffff', marginTop: 4 }}>
               {alerta.mensagem}
             </Text>
-
-            {distanciaAgressor !== null && (
-              <Text style={{ color: '#FFFFFF' }}>
-                Distância: {distanciaAgressor.toFixed()} metros
-              </Text>
-            )}
 
           </View>
         </View>

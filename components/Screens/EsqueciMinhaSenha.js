@@ -51,11 +51,11 @@ export default function EsqueciMinhaSenha({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.voltar}>
+        <Ionicons name="arrow-back" size={40} color="#50333D" />
+      </TouchableOpacity>
       <View style={styles.box}>
         <StatusBar style="auto" />
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.voltar}>
-          <Ionicons name="arrow-back" size={40} color="#50333D" />
-        </TouchableOpacity>
         <Image source={require('../../assets/logoSosMulher.png')} style={styles.logo} />
         <Text style={styles.title}>Esqueceu sua senha?</Text>
         <Text style={styles.subtitle}>Digite seu email para receber sua senha!</Text>
@@ -64,7 +64,7 @@ export default function EsqueciMinhaSenha({ navigation }) {
       <View style={styles.box}>
         <Text style={styles.subtitle}>Email cadastrado</Text>
         <View style={styles.inputContainer}>
-          <Feather name="mail" size={24} color="black" style={styles.icon} />
+          <Feather name="mail" size={24} color="#bc5478" style={styles.icon} />
           <TextInput
             style={styles.input}
             placeholder="Email..."

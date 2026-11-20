@@ -1,0 +1,323 @@
+import { StyleSheet } from 'react-native';
+import SobreApp from '../Screens/sobreApp';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FEF9FB'
+  },
+  header: {
+    paddingTop: 40,
+    paddingBottom: 20,
+    paddingHorizontal: 15,
+    flexDirection: 'column',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerTitulo: {
+    color: '#50333D',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  cont: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    flexDirection: 'column',
+    padding: 15,
+    margin: 20,
+    elevation: 2
+  },
+  principalCont: {
+    alignItems: 'center',
+  },
+  fotoCont: {
+    width: 100,
+    height: 100,
+    borderRadius: 100,
+    elevation:3
+  },
+  nomeCont: {
+    fontWeight: 'bold',
+    color: '#50333D',
+    fontSize: 20,
+    marginVertical: 10,
+  },
+  foneCont: {
+    color: '#777',
+    fontSize: 16,
+    textAlign: 'left',
+    marginVertical: 5,
+  },
+  Exitbutton: {
+    backgroundColor: '#FEF9FB',
+    borderRadius: 10,
+    borderColor: '#EC6E99',
+    borderWidth: 2,
+    margin: 20,
+    padding: 15,
+    elevation: 2,
+  },
+  textExitButton: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: '#EC6E99',
+    fontWeight: 'bold'
+  },
+  voltar: {
+    paddingTop: 40,
+    paddingBottom: 20,
+    paddingHorizontal: 15,
+  },
+  opcao: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  radio: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+
+    borderWidth: 1.5,
+    borderColor: '#D789B1',
+
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    marginRight: 10,
+  },
+
+  radioSelecionado: {
+    borderColor: '#D789B1',
+  },
+
+  radioInterno: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#D789B1',
+  },
+  buttonSection: {
+    flexDirection: 'row',
+    padding: 10,
+    justifyContent: 'space-between',
+    marginVertical: 10
+  },
+  buttonExcluir: {
+    backgroundColor: '#FEF9FB',
+    borderRadius: 50,
+    borderColor: '#EC6E99',
+    borderWidth: 2,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    elevation: 2,
+  },
+  textButtonExcluir: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#EC6E99',
+    fontWeight: 'bold'
+  },
+  buttonEditar: {
+    backgroundColor: '#EC6E99',
+    borderRadius: 50,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    elevation: 3,
+  },
+  textButtonEditar: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#FEF9FB',
+    fontWeight: 'bold'
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#50333D",
+    textAlign: 'center'
+  },
+
+  modalLabel: {
+    fontSize: 13,
+    color: "#777",
+    marginTop: 10
+  },
+
+  modalText: {
+    fontSize: 14,
+    marginTop: 3,
+    color: "#777",
+  },
+  deleteModal: {
+    width: "90%",
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    padding: 20,
+  },
+  containerFoto: {
+    position: "relative",
+  },
+  mudarFoto: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    backgroundColor: "#FEF9FB",
+    padding: 3,
+    borderRadius: 50,
+    elevation:2
+  },
+  containerButtons: {
+    backgroundColor: "#fff",
+    margin: 20,
+    flexDirection: "column",
+    borderRadius: 20,
+    elevation: 3
+  },
+  buttonPerfil: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    borderBottomColor: '#D7A6BF',
+    borderBottomWidth: 1,
+    alignItems: 'center',
+    color: '#50333D',
+  },
+  ultimoButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    alignItems: 'center',
+    color: '#50333D'
+  },
+  textoButtonContainer: {
+    color: '#50333D',
+    fontSize: 16
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    flexDirection: 'column',
+    padding: 15,
+    margin: 20,
+    elevation: 2
+  },
+  inputContainer: {
+    backgroundColor: "#FEF9FB",
+    borderWidth: 1,
+    borderColor: "#EC6E99",
+    borderRadius: 12,
+    marginVertical: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 3,
+    fontSize: 15  ,
+    elevation: 3,
+    color: "#50333D",
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  input: {
+    flex: 1,
+    height: 50,
+  },
+  form: {
+    width: '100%',
+    marginTop: 10,
+  },
+  cardTitulo: {
+    color: "#50333D",
+    fontWeight: 'bold',
+    fontSize: 20,
+    textAlign: 'center',
+    marginVertical:10,
+  },
+  scrollContent: {
+    width: '100%',
+    justifyContent: 'center',
+  },
+  buttonCancelar: {
+    backgroundColor: '#EC6E99',
+    borderRadius: 20,
+    marginVertical: 10,
+    padding: 15,
+    elevation: 2,
+    alignItems: 'center'
+  },
+  textButtonCancelar: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: '#FEF9FB',
+    fontWeight: 'bold'
+  },
+
+  fundoModal: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.45)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+
+  modalImagem: {
+    width: '100%',
+    maxWidth: 350,
+    backgroundColor: '#FEF9FB',
+    borderRadius: 18,
+    padding: 24,
+  },
+
+  tituloModal: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#50333D',
+    marginBottom: 8,
+  },
+
+  textoModal: {
+    fontSize: 14,
+    color: '#725C65',
+    marginBottom: 18,
+  },
+
+  opcaoModal: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingVertical: 15,
+    borderTopWidth: 1,
+    borderTopColor: '#EADDE3',
+  },
+
+  textoOpcao: {
+    fontSize: 16,
+    color: '#50333D',
+  },
+
+  cancelarModal: {
+    textAlign: 'center',
+    color: '#D789B1',
+    fontWeight: 'bold',
+    marginTop: 14,
+  },
+  divisao: {
+    backgroundColor: '#D789B1',
+    width: '90%',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  SobreApp:{
+    textAlign: 'justify',
+    color: 'black',
+    fontSize:12
+  }
+});

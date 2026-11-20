@@ -1,5 +1,4 @@
-
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 
 import {
   View,
@@ -7,7 +6,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Animated,
-  ScrollView
+  ScrollView,
+  Linking
 } from 'react-native'
 
 import { useNavigation } from '@react-navigation/native'
@@ -16,15 +16,31 @@ import Feather from '@expo/vector-icons/Feather'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { Ionicons } from '@expo/vector-icons'
 import { usarVitima } from '../contextos/vitimaContexto'
+import axios from 'axios'
+
+const API_ALERTA = 'http://seuip:8000/api/Panico-Violacao'
+const API_AGRESSOR = 'http://seuip:8000/api/localAgressor'
+
 
 export default function Home() {
 
   const { vitimaLogada, distanciaAgressor, statusAlerta } = usarVitima()
+  const [medidaAgressor, setMedidaAgressor] = useState(null);
+  const [carregando, setCarregando] = useState(false);
+  const [mensagemErro, setMensagemErro] = useState('');
 
   const navigation = useNavigation()
 
   const onda1 = useRef(new Animated.Value(0)).current
   const onda2 = useRef(new Animated.Value(0)).current
+
+  const openUrl = async (url) => {
+    try {
+      await Linking.openURL(url);
+    } catch (error) {
+      console.log('Erro ao abrir discador:', error);
+    }
+  };
 
   useEffect(() => {
     const animacao1 = Animated.loop(
@@ -131,6 +147,78 @@ export default function Home() {
 
   const alertaAtual = configuracaoAlerta[statusAlerta] || configuracaoAlerta.aguardando
 
+  const buscarMedidaAgressor = async () => {
+    try {
+      if (!vitimaLogada?.idVitima) return;
+
+      const resposta = await axios.get(
+        `${API_AGRESSOR}/${vitimaLogada.idVitima}`
+      );
+
+      const agressores = resposta.data.localizacoesAgressor || [];
+
+      const agressor = agressores.find(
+        item => item.idMedida != null
+      );
+
+      if (!agressor) {
+        console.log('Nenhuma medida protetiva encontrada.');
+        setMedidaAgressor(null);
+        return;
+      }
+
+      setMedidaAgressor({
+        idMedida: agressor.idMedida,
+        distanciaMedida: Number(agressor.distanciaMedida),
+        raioAlertaMedida: Number(agressor.raioAlertaMedida),
+        latitude: Number(agressor.latitude),
+        longitude: Number(agressor.longitude)
+      });
+
+      console.log('Medida protetiva:', agressor.idMedida);
+
+    } catch (error) {
+      console.log(
+        'Erro ao buscar medida:',
+        error.response?.data || error.message
+      );
+    }
+  };
+
+  useEffect(() => {
+    buscarMedidaAgressor();
+  }, [vitimaLogada?.idVitima]);
+
+  const enviarViolacao = async () => {
+
+    try {
+      setCarregando(true);
+
+      console.log('Medida recebida:', medidaAgressor);
+
+      const response = await axios.post(
+        `${API_ALERTA}/${medidaAgressor.idMedida}`
+      );
+
+      // O alerta foi registrado no servidor.
+      navigation.navigate('Alerta');
+
+    } catch (erro) {
+      console.error(
+        'Erro ao registrar violação:',
+        erro.response?.data || erro.message
+      );
+
+      setMensagemErro(
+        erro.response?.data?.message ||
+        'Não foi possível registrar a ocorrência. Tente novamente.'
+      );
+
+    } finally {
+      setCarregando(false);
+    }
+  };
+
   return (
 
     <View style={styles.container}>
@@ -147,7 +235,7 @@ export default function Home() {
             alignItems: 'center',
             marginHorizontal: 20,
             marginVertical: 40,
-            elevation:2,
+            elevation: 2,
           }}
         >
           <Feather name={alertaAtual.icone} size={34} color="#FFFFFF" />
@@ -168,18 +256,6 @@ export default function Home() {
               {alertaAtual.mensagem}
             </Text>
 
-            {distanciaAgressor !== null && (
-              <Text
-                style={{
-                  color: '#FFFFFF',
-                  marginTop: 5,
-                  textAlign: 'center',
-                  fontWeight: 'bold'
-                }}
-              >
-                Distância: {distanciaAgressor.toFixed(0)} metros
-              </Text>
-            )}
           </View>
         </View>
 
@@ -217,7 +293,10 @@ export default function Home() {
                 },
               ]}
             />
-            <TouchableOpacity onPress={() => navigation.navigate('RegistrarViolacao')}
+            <TouchableOpacity
+              onPress={enviarViolacao}
+              disabled={carregando || !medidaAgressor}
+
               style={styles.button}>
               <Text style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>
                 Botão do Pânico
@@ -239,21 +318,23 @@ export default function Home() {
             <View style={styles.viewAcesso}>
 
               <View style={styles.buttonSection}>
-                <TouchableOpacity style={styles.chamar}>
+                <TouchableOpacity style={styles.chamar} onPress={() => openUrl('tel:190')}>
                   <MaterialIcons name="local-police" size={32} color="#FEF9FB" />
                 </TouchableOpacity>
                 <Text style={styles.textBotao}>Polícia</Text>
               </View>
 
               <View style={styles.buttonSection}>
-                <TouchableOpacity style={styles.chamar}>
-                  <MaterialIcons name="phone" size={32} color="#FEF9FB" />
+                <TouchableOpacity style={styles.chamar} onPress={() => navigation.navigate('RegistrarViolacao')}>
+                  <MaterialIcons name="crisis-alert" size={32} color="#FEF9FB" />
                 </TouchableOpacity>
-                <Text style={styles.textBotao}>Contato de Emergência</Text>
+                <Text style={styles.textBotao}>Relatar Incidente</Text>
               </View>
 
               <View style={styles.buttonSection}>
-                <TouchableOpacity style={styles.chamar}>
+                <TouchableOpacity style={styles.chamar} onPress={() => navigation.navigate('Perfil', {
+                  screen: 'GuiaApp'
+                })}>
                   <Ionicons name="shield-checkmark" size={32} color={"#FEF9FB"}></Ionicons>
                 </TouchableOpacity>
                 <Text style={styles.textBotao}>Dicas de Segurança</Text>

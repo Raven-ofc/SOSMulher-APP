@@ -12,6 +12,12 @@ export const styles = StyleSheet.create({
     height: 200,
     alignSelf: 'center',
   },
+    titleSOS:{
+    fontSize: 35,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#EC6E99',
+  },
   button: {
     backgroundColor: '#EC6E99',
     borderRadius: 50,
@@ -22,6 +28,11 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     color: '#ffffff',
+  },
+  textButton2: {
+    fontSize: 20,
+    textAlign: 'left',
+    color: '#EC6E99',
   },
   title: {
     fontSize: 30,

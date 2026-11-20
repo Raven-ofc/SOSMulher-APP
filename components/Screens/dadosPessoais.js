@@ -209,18 +209,6 @@ export default function DadosPessoais({ navigation }) {
 
             <View style={styles.form}>
 
-              <Text style={styles.textInput}>Nome</Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Nome completo..."
-                  placeholderTextColor={"#915e70"}
-                  value={nome}
-                  onChangeText={setNome}
-                  editable={false}
-                />
-              </View>
-
               <Text style={styles.textInput}>Data de Nascimento</Text>
               <View style={styles.inputContainer}>
                 <TextInput
@@ -264,7 +252,7 @@ export default function DadosPessoais({ navigation }) {
               <Text style={styles.textInput}>Telefone</Text>
               <View style={styles.inputContainer}>
                 <TextInput
-                  style={styles.input}
+                  style={[styles.input, {color: '#50333D'}]}
                   placeholderTextColor={"#915e70"}
                   placeholder="Telefone..."
                   value={fone}
@@ -277,7 +265,7 @@ export default function DadosPessoais({ navigation }) {
               <Text style={styles.textInput}>Email</Text>
               <View style={styles.inputContainer}>
                 <TextInput
-                  style={styles.input}
+                  style={[styles.input, {color: '#50333D'}]}
                   placeholder="Email..."
                   placeholderTextColor={"#915e70"}
                   value={email}

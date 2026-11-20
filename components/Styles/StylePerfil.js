@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import SobreApp from '../Screens/sobreApp';
 
 export const styles = StyleSheet.create({
   container: {
@@ -16,16 +17,14 @@ export const styles = StyleSheet.create({
   },
   headerTitulo: {
     color: '#50333D',
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
-    marginLeft: 10,
+
   },
   cont: {
     backgroundColor: '#fff',
     borderRadius: 10,
     flexDirection: 'column',
-    borderColor: '#D7A6BF',
-    borderWidth: 1,
     padding: 15,
     margin: 20,
     elevation: 2
@@ -208,8 +207,6 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     flexDirection: 'column',
-    borderColor: '#D7A6BF',
-    borderWidth: 1,
     padding: 15,
     margin: 20,
     elevation: 2
@@ -232,6 +229,14 @@ export const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: 50,
+  },
+  icon:{
+    marginRight: 8,
+  },
+  textInput:{
+    fontSize:18,
+    padding:5,
+    color:'#50333D'
   },
   form: {
     width: '100%',
@@ -312,5 +317,15 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 14,
   },
-
+  divisao: {
+    backgroundColor: '#D789B1',
+    width: '90%',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  SobreApp:{
+    textAlign: 'justify',
+    color: 'black',
+    fontSize:12
+  }
 });

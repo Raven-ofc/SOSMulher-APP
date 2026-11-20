@@ -21,13 +21,14 @@ export default function HomeTabs({ route }) {
         tabBarPosition='bottom'
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: '#4084e4',
-          tabBarInactiveTintColor: 'gray',
+          tabBarActiveTintColor: '#EE5388',
+          tabBarInactiveTintColor: '#eba8bf',
           tabBarShowLabel: true,
           tabBarStyle: {
             height: 70 + insets.bottom,
             paddingBottom: insets.bottom,
-            elevation: 6
+            elevation: 9,
+            backgroundColor: '#ffffff'
           },
           tabBarIndicatorStyle: {
             display: 'none'

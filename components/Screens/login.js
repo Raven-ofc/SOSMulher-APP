@@ -78,16 +78,17 @@ export default function Login({ navigation }) {
               <Ionicons name="arrow-back" size={40} color="#50333D" />
             </TouchableOpacity>
             <Image source={require('../../assets/logoSosMulher.png')} style={styles.logo} />
-            <Text style={styles.title}>Bem-vinda!</Text>
-            <Text style={styles.subtitle}>Faça login para continuar!</Text>
+            <Text style={styles.titleSOS}>SOS Mulher</Text>
+            <Text style={styles.subtitle}>Bem-Vinda! Faça login para continuar!</Text>
           </View>
 
           <View style={styles.form}>
             <View style={styles.inputContainer}>
-              <Feather name="mail" size={24} color="black" style={styles.icon} />
+              <Feather name="mail" size={24} color="#bc5478" style={styles.icon} />
               <TextInput style={styles.input}
                 placeholder="Email"
                 placeholderTextColor={"#915e70"}
+                color={'#b00c45'}
                 value={email}
                 onChangeText={setEmail}
                 autoCapitalize='none'
@@ -96,12 +97,13 @@ export default function Login({ navigation }) {
             </View>
             <View style={styles.inputContainer}>
               <TouchableOpacity onPress={() => setMostrarSenha(!mostrarSenha)}>
-                <Feather name={mostrarSenha ? "eye-off" : "eye"} size={24} color="black" style={styles.icon} />
+                <Feather name={mostrarSenha ? "eye-off" : "eye"} size={24} color="#bc5478" style={styles.icon} />
               </TouchableOpacity>
               <TextInput style={styles.input}
                 placeholder="Senha"
                 placeholderTextColor={"#915e70"}
                 value={senha}
+                color={'#b00c45'}
                 onChangeText={setSenha}
                 secureTextEntry={!mostrarSenha}
               ></TextInput>
